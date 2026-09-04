@@ -65,3 +65,17 @@ export const compressImage = (file, maxWidth = 500, quality = 0.85) => {
     reader.readAsDataURL(file);
   });
 };
+
+/**
+ * Reads a document (such as a PDF resume) and converts it to a Base64 Data URL.
+ * Allows storing PDF documents directly inside MySQL LONGTEXT for 100% cloud persistence.
+ */
+export const readFileAsDataUrl = (file) => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = (err) => reject(new Error('Failed to read document file: ' + (err?.message || '')));
+    reader.readAsDataURL(file);
+  });
+};
+

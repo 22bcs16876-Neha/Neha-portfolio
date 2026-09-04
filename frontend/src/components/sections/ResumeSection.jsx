@@ -1,10 +1,12 @@
 import React from 'react';
 import { FileText, Download, ExternalLink } from 'lucide-react';
+import { resolveAssetUrl } from '../../utils/assets';
 
 export const ResumeSection = ({ profile }) => {
-  const resumeUrl = profile?.resumeUrl;
+  const resumeUrl = resolveAssetUrl(profile?.resumeUrl);
 
   if (!resumeUrl) return null;
+
 
   return (
     <section id="resume" className="section-padding" style={{ borderBottom: '1px solid var(--border-subtle)' }}>
@@ -56,7 +58,7 @@ export const ResumeSection = ({ profile }) => {
             </a>
             <a
               href={resumeUrl}
-              download
+              download={`${(profile?.fullName || 'Amit_Kumar').replace(/\s+/g, '_')}_Resume.pdf`}
               className="btn btn-secondary"
             >
               <Download size={16} />

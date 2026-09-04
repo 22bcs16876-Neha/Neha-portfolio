@@ -1,5 +1,6 @@
 import React from 'react';
 import { ArrowUp, Github, Linkedin, Mail, Code, ArrowRight, MapPin, Clock, FileText, CheckCircle2, ShieldCheck, Terminal } from 'lucide-react';
+import { resolveAssetUrl } from '../../utils/assets';
 
 export const Footer = ({ profile }) => {
   const scrollToTop = () => {
@@ -16,7 +17,7 @@ export const Footer = ({ profile }) => {
   const role = profile?.title || 'Java Software Developer';
   const location = profile?.location || 'Bengaluru, India';
   const roleBadge = profile?.roleBadge || 'Java Developer';
-  const avatarImage = profile?.avatarUrl || '/default-avatar.svg';
+  const avatarImage = resolveAssetUrl(profile?.avatarUrl) || '/default-avatar.svg';
 
   const navLinks = [
     { label: 'About & Foundations', href: 'about' },
@@ -109,7 +110,7 @@ export const Footer = ({ profile }) => {
 
             {profile?.resumeUrl && (
               <a
-                href={profile.resumeUrl}
+                href={resolveAssetUrl(profile.resumeUrl)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn btn-secondary"

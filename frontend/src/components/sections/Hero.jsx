@@ -224,7 +224,7 @@ export const Hero = ({ profile }) => {
 
                 {profile?.resumeUrl && (
                   <a
-                    href={profile.resumeUrl}
+                    href={resolveAssetUrl(profile.resumeUrl)}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="btn btn-secondary"

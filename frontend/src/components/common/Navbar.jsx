@@ -179,7 +179,7 @@ export const Navbar = ({ profile }) => {
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexShrink: 0 }}>
           {profile?.resumeUrl && (
             <a
-              href={profile.resumeUrl}
+              href={resolveAssetUrl(profile.resumeUrl)}
               target="_blank"
               rel="noopener noreferrer"
               className="btn btn-secondary btn-sm resume-btn"
@@ -262,7 +262,7 @@ export const Navbar = ({ profile }) => {
           ))}
           {profile?.resumeUrl && (
             <a
-              href={profile.resumeUrl}
+              href={resolveAssetUrl(profile.resumeUrl)}
               target="_blank"
               rel="noopener noreferrer"
               className="btn btn-secondary"

@@ -3,7 +3,7 @@ import { portfolioService } from '../../services/portfolioService';
 import { adminService } from '../../services/adminService';
 import { useToast } from '../../context/ToastContext';
 import { updateTabBranding } from '../../utils/favicon';
-import { resolveAssetUrl, compressImage } from '../../utils/assets';
+import { resolveAssetUrl, compressImage, readFileAsDataUrl } from '../../utils/assets';
 import { Save, Loader2, Image as ImageIcon, Sparkles, Upload, Check, X, FileText, Sun, Moon } from 'lucide-react';
 
 export const AdminProfile = () => {
@@ -237,16 +237,52 @@ export const AdminProfile = () => {
 
     setUploadingResume(true);
     try {
-      const data = await adminService.uploadFile(file);
-      if (data?.url) {
-        setFormData((prev) => ({ ...prev, resumeUrl: data.url }));
-        addToast('Resume PDF uploaded successfully!');
+      // 1. Convert PDF to Base64 Data URL for direct, permanent MySQL database storage
+      const dataUrl = await readFileAsDataUrl(file);
+      const updatedData = { ...formData, resumeUrl: dataUrl };
+      setFormData(updatedData);
+
+      // 2. Persist directly to backend MySQL database immediately
+      try {
+        await adminService.updateProfile(updatedData);
+        addToast('Resume PDF stored directly in database successfully!', 'success');
+      } catch (saveErr) {
+        console.warn('Direct database save fallback:', saveErr);
+        // Fallback: try multipart upload endpoint if direct DB payload is rejected
+        try {
+          const uploadRes = await adminService.uploadFile(file);
+          if (uploadRes?.url) {
+            const fallbackData = { ...formData, resumeUrl: uploadRes.url };
+            setFormData(fallbackData);
+            await adminService.updateProfile(fallbackData);
+            addToast('Resume PDF uploaded and linked successfully!', 'success');
+          }
+        } catch (uploadErr) {
+          addToast('Resume loaded into preview. Click "Save Resume to Database" or Save below.', 'info');
+        }
       }
     } catch (err) {
-      addToast(err?.response?.data?.message || 'Failed to upload resume PDF', 'error');
+      console.error('Resume processing error:', err);
+      addToast('Failed to process resume PDF: ' + (err?.message || 'Unknown error'), 'error');
     } finally {
       setUploadingResume(false);
       if (resumeInputRef.current) resumeInputRef.current.value = '';
+    }
+  };
+
+  const handleSaveResumeOnly = async () => {
+    if (!formData.resumeUrl) {
+      addToast('No resume link or document to save', 'error');
+      return;
+    }
+    setUploadingResume(true);
+    try {
+      await adminService.updateProfile(formData);
+      addToast('Resume saved to database successfully!', 'success');
+    } catch (err) {
+      addToast('Failed to save resume: ' + (err?.response?.data?.message || err?.message || 'Error'), 'error');
+    } finally {
+      setUploadingResume(false);
     }
   };
 
@@ -1093,7 +1129,7 @@ export const AdminProfile = () => {
               </button>
               {formData.resumeUrl && (
                 <a
-                  href={formData.resumeUrl}
+                  href={resolveAssetUrl(formData.resumeUrl)}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn btn-ghost"
@@ -1102,6 +1138,18 @@ export const AdminProfile = () => {
                   <FileText size={14} />
                   <span>Preview Linked Resume</span>
                 </a>
+              )}
+              {formData.resumeUrl && (
+                <button
+                  type="button"
+                  onClick={handleSaveResumeOnly}
+                  disabled={uploadingResume}
+                  className="btn btn-secondary"
+                  style={{ display: 'inline-flex', alignItems: 'center', gap: '0.375rem', fontSize: '0.8125rem' }}
+                >
+                  <Save size={14} />
+                  <span>Save Resume to Database</span>
+                </button>
               )}
             </div>
             <input
@@ -1113,6 +1161,9 @@ export const AdminProfile = () => {
               className="form-input"
               style={{ fontFamily: 'var(--font-mono)', fontSize: '0.8125rem' }}
             />
+            <p style={{ fontSize: '0.75rem', color: 'var(--text-tertiary)', marginTop: '0.375rem', lineHeight: '1.4' }}>
+              Files uploaded directly from your computer are encoded and permanently stored in your MySQL database (never lost on server sleep or restart). You can also paste an external URL.
+            </p>
           </div>
 
           <div className="form-group">

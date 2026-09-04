@@ -1,5 +1,8 @@
 server:
   port: ${PORT:8080}
+  tomcat:
+    max-http-form-post-size: 25MB
+    max-swallow-size: 25MB
   error:
     include-message: always
     include-binding-errors: always
@@ -7,6 +10,11 @@ server:
 spring:
   application:
     name: portfolio-backend
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 25MB
+      enabled: true
 
   datasource:
     url: ${SPRING_DATASOURCE_URL:${DATABASE_URL:${DB_URL:jdbc:mysql://localhost:3306/portfolio_db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC}}}
