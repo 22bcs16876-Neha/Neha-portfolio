@@ -315,7 +315,7 @@ export const AdminLogin = () => {
                 <div style={{ fontWeight: 600, lineHeight: 1.4 }}>{error}</div>
                 {authMode === 'otp' && (
                   <p style={{ margin: '0.375rem 0 0', fontSize: '0.75rem', opacity: 0.9, lineHeight: 1.4 }}>
-                    EmailJS is unconfigured on this profile. You can log in directly using the <strong>Password</strong> tab (Master Password: <code>Admin@12345</code>).
+                    EmailJS is unconfigured on this profile. You can sign in directly using the <strong>Password</strong> tab.
                   </p>
                 )}
               </div>
@@ -357,14 +357,9 @@ export const AdminLogin = () => {
         {authMode === 'password' && (
           <form onSubmit={handlePasswordSubmit}>
             <div className="form-group" style={{ marginBottom: '1.25rem' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.375rem' }}>
-                <label htmlFor="password" className="form-label" style={{ marginBottom: 0 }}>
-                  Master Password
-                </label>
-                <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>
-                  Default: <code>Admin@12345</code>
-                </span>
-              </div>
+              <label htmlFor="password" className="form-label">
+                Master Password
+              </label>
               <div style={{ position: 'relative' }}>
                 <input
                   id="password"
