@@ -64,6 +64,7 @@ export const AdminLoginModal = ({ isOpen, onClose }) => {
   // Reset state when modal opens
   useEffect(() => {
     if (isOpen) {
+      setAuthMode('password');
       setError('');
       setPassword('');
       setOtpCode('');
@@ -118,7 +119,6 @@ export const AdminLoginModal = ({ isOpen, onClose }) => {
 
     try {
       const data = await adminService.sendOtp();
-      setOtpSent(true);
       setCooldown(60);
       setExpiresIn(900);
 
@@ -127,6 +127,7 @@ export const AdminLoginModal = ({ isOpen, onClose }) => {
       const publicKey = data.publicKey || localStorage.getItem('emailjs_public_key') || import.meta.env.VITE_EMAILJS_PUBLIC_KEY || '';
 
       if (data.dispatched) {
+        setOtpSent(true);
         setEmailStatusMsg('A 6-digit one-time passcode has been sent to your registered email address.');
         addToast('OTP passcode dispatched to your email inbox.');
       } else if (publicKey) {
@@ -143,18 +144,23 @@ export const AdminLoginModal = ({ isOpen, onClose }) => {
             message: `Your verification OTP passcode is: ${data.passcode} (valid for 15 minutes)`,
           };
           await emailjs.send(serviceId, templateId, templateParams, publicKey);
+          setOtpSent(true);
           setEmailStatusMsg('A 6-digit one-time passcode has been sent to your registered email address.');
           addToast('OTP passcode dispatched to your email inbox.');
         } catch (emailErr) {
           console.error('EmailJS direct delivery error:', emailErr);
-          setError('EmailJS dispatch failed: ' + (emailErr?.text || emailErr?.message || 'Check EmailJS configuration.'));
+          setOtpSent(false);
+          const rawErr = emailErr?.text || emailErr?.message || 'Check EmailJS configuration.';
+          setError(`EmailJS dispatch failed (${rawErr}). EmailJS is not linked to this domain/account yet. Please use Password Sign In to log in directly.`);
         }
       } else {
-        setEmailStatusMsg('Passcode generated for your registered email address.');
+        setOtpSent(false);
+        setError('EmailJS is not configured for this account yet. Please use Password Sign In to log in directly.');
       }
     } catch (err) {
       console.error('Send OTP failure:', err);
-      const msg = err.response?.data?.message || 'Failed to dispatch OTP. Please try again.';
+      setOtpSent(false);
+      const msg = err.response?.data?.message || 'Failed to dispatch OTP. Please use Password Sign In.';
       setError(msg);
     } finally {
       setSendingOtp(false);
@@ -316,24 +322,60 @@ export const AdminLoginModal = ({ isOpen, onClose }) => {
           </button>
         </div>
 
-        {/* Error Banner */}
+        {/* Error Banner with One-Click Password Fallback */}
         {error && (
           <div
             style={{
               backgroundColor: 'var(--accent-rose-subtle)',
               border: '1px solid var(--accent-rose)',
               borderRadius: 'var(--radius-sm)',
-              padding: '0.625rem 0.875rem',
+              padding: '0.75rem 1rem',
               marginBottom: '1rem',
               fontSize: '0.8125rem',
               color: 'var(--accent-rose)',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.5rem',
             }}
           >
-            <ShieldAlert size={16} style={{ flexShrink: 0 }} />
-            <span>{error}</span>
+            <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.5rem' }}>
+              <ShieldAlert size={16} style={{ flexShrink: 0, marginTop: '2px' }} />
+              <div style={{ flex: 1 }}>
+                <div style={{ fontWeight: 600, lineHeight: 1.4 }}>{error}</div>
+                {authMode === 'otp' && (
+                  <p style={{ margin: '0.375rem 0 0', fontSize: '0.75rem', opacity: 0.9, lineHeight: 1.4 }}>
+                    EmailJS is unconfigured on this profile. You can log in directly using the <strong>Password</strong> tab (Master Password: <code>Admin@12345</code>).
+                  </p>
+                )}
+              </div>
+            </div>
+            {authMode === 'otp' && (
+              <button
+                type="button"
+                onClick={() => {
+                  setAuthMode('password');
+                  setError('');
+                }}
+                style={{
+                  marginTop: '0.625rem',
+                  width: '100%',
+                  padding: '0.5rem 0.75rem',
+                  backgroundColor: 'var(--bg-card)',
+                  border: '1px solid var(--border-subtle)',
+                  borderRadius: 'var(--radius-sm)',
+                  color: 'var(--text-primary)',
+                  fontWeight: 600,
+                  fontSize: '0.8125rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '0.5rem',
+                  cursor: 'pointer',
+                  boxShadow: '0 1px 2px rgba(0,0,0,0.05)',
+                  transition: 'all 0.15s ease',
+                }}
+              >
+                <KeyRound size={14} style={{ color: 'var(--accent-primary)' }} />
+                <span>Switch to Password Login</span>
+              </button>
+            )}
           </div>
         )}
 
@@ -341,9 +383,14 @@ export const AdminLoginModal = ({ isOpen, onClose }) => {
         {authMode === 'password' && (
           <form onSubmit={handlePasswordSubmit}>
             <div className="form-group" style={{ marginBottom: '1.25rem' }}>
-              <label htmlFor="modal-password" className="form-label">
-                Master Password
-              </label>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.375rem' }}>
+                <label htmlFor="modal-password" className="form-label" style={{ marginBottom: 0 }}>
+                  Master Password
+                </label>
+                <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>
+                  Default: <code>Admin@12345</code>
+                </span>
+              </div>
               <input
                 id="modal-password"
                 type="password"
@@ -465,6 +512,8 @@ export const AdminLoginModal = ({ isOpen, onClose }) => {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
+                    gap: '1rem',
+                    flexWrap: 'wrap',
                     marginTop: '1rem',
                     paddingTop: '0.875rem',
                     borderTop: '1px solid var(--border-subtle)',
@@ -479,6 +528,19 @@ export const AdminLoginModal = ({ isOpen, onClose }) => {
                   >
                     <RefreshCw size={12} className={sendingOtp ? 'spin' : ''} />
                     <span>{cooldown > 0 ? `Resend code in ${cooldown}s` : 'Resend new OTP to Email'}</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setAuthMode('password');
+                      setError('');
+                    }}
+                    className="btn btn-ghost btn-sm"
+                    style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}
+                  >
+                    <KeyRound size={12} />
+                    <span>Use Password instead</span>
                   </button>
                 </div>
               </form>
