@@ -1,0 +1,28 @@
+services:
+  - type: web
+    name: portfolio-backend
+    env: docker
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    plan: free
+    region: oregon
+    healthCheckPath: /api/profile
+    envVars:
+      - key: PORT
+        value: 8080
+      - key: DATABASE_URL
+        sync: false
+      - key: DATABASE_USERNAME
+        sync: false
+      - key: DATABASE_PASSWORD
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: ADMIN_USERNAME
+        value: admin
+      - key: ADMIN_PASSWORD
+        value: Admin@12345
+      - key: ADMIN_EMAIL
+        value: amitkr9523da@gmail.com
+      - key: CORS_ALLOWED_ORIGINS
+        value: "*"

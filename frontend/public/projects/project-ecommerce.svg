@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" width="640" height="360">
+  <rect width="640" height="360" fill="#0f172a" />
+  <!-- Terminal Header -->
+  <rect x="0" y="0" width="640" height="38" fill="#1e293b" />
+  <circle cx="24" cy="19" r="5" fill="#ef4444" />
+  <circle cx="40" cy="19" r="5" fill="#f59e0b" />
+  <circle cx="56" cy="19" r="5" fill="#10b981" />
+  <text x="80" y="24" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="12">api.market-platform.internal/v1/inventory/reserve</text>
+  <rect x="520" y="9" width="95" height="20" rx="4" fill="#1e3a8a" />
+  <text x="532" y="23" fill="#60a5fa" font-family="'JetBrains Mono', monospace" font-size="10">SWAGGER v3</text>
+
+  <!-- Top Metrics / Status -->
+  <rect x="25" y="55" width="180" height="48" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1" />
+  <text x="38" y="73" fill="#94a3b8" font-family="'Inter', sans-serif" font-size="10">RESERVATION TIMEOUT</text>
+  <text x="38" y="93" fill="#f8fafc" font-family="'JetBrains Mono', monospace" font-size="15" font-weight="700">15 min Auto-Release</text>
+
+  <rect x="230" y="55" width="180" height="48" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1" />
+  <text x="243" y="73" fill="#94a3b8" font-family="'Inter', sans-serif" font-size="10">DATABASE LOCK</text>
+  <text x="243" y="93" fill="#38bdf8" font-family="'JetBrains Mono', monospace" font-size="15" font-weight="700">PESSIMISTIC_WRITE</text>
+
+  <rect x="435" y="55" width="180" height="48" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1" />
+  <text x="448" y="73" fill="#94a3b8" font-family="'Inter', sans-serif" font-size="10">CATALOG ITEMS</text>
+  <text x="448" y="93" fill="#34d399" font-family="'JetBrains Mono', monospace" font-size="15" font-weight="700">240,000 SKUs</text>
+
+  <!-- Main View: Product Grid / Inventory State -->
+  <rect x="25" y="118" width="590" height="215" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1" />
+  <rect x="25" y="118" width="590" height="32" rx="6" fill="#243247" />
+  <text x="45" y="139" fill="#cbd5e1" font-family="'Inter', sans-serif" font-size="11" font-weight="600">INVENTORY STATE MACHINE &amp; CATALOG OVERVIEW</text>
+
+  <!-- SKU 1 Card -->
+  <rect x="45" y="165" width="165" height="150" rx="4" fill="#0f172a" stroke="#334155" stroke-width="1" />
+  <rect x="45" y="165" width="165" height="50" fill="#1e293b" />
+  <text x="55" y="195" fill="#38bdf8" font-family="'JetBrains Mono', monospace" font-size="11">SKU-99042</text>
+  <text x="55" y="235" fill="#f8fafc" font-family="'Inter', sans-serif" font-size="11" font-weight="600">Enterprise Server Node</text>
+  <text x="55" y="255" fill="#94a3b8" font-family="'Inter', sans-serif" font-size="10">Available: 42 units</text>
+  <text x="55" y="275" fill="#facc15" font-family="'Inter', sans-serif" font-size="10">Reserved: 8 units</text>
+  <rect x="55" y="287" width="80" height="18" rx="3" fill="#064e3b" />
+  <text x="63" y="300" fill="#34d399" font-family="'JetBrains Mono', monospace" font-size="9">LOCK ACTIVE</text>
+
+  <!-- SKU 2 Card -->
+  <rect x="235" y="165" width="165" height="150" rx="4" fill="#0f172a" stroke="#334155" stroke-width="1" />
+  <rect x="235" y="165" width="165" height="50" fill="#1e293b" />
+  <text x="245" y="195" fill="#38bdf8" font-family="'JetBrains Mono', monospace" font-size="11">SKU-88120</text>
+  <text x="245" y="235" fill="#f8fafc" font-family="'Inter', sans-serif" font-size="11" font-weight="600">NVMe High-IO Array</text>
+  <text x="245" y="255" fill="#94a3b8" font-family="'Inter', sans-serif" font-size="10">Available: 118 units</text>
+  <text x="245" y="275" fill="#facc15" font-family="'Inter', sans-serif" font-size="10">Reserved: 12 units</text>
+  <rect x="245" y="287" width="80" height="18" rx="3" fill="#064e3b" />
+  <text x="253" y="300" fill="#34d399" font-family="'JetBrains Mono', monospace" font-size="9">LOCK ACTIVE</text>
+
+  <!-- SKU 3 Card -->
+  <rect x="425" y="165" width="165" height="150" rx="4" fill="#0f172a" stroke="#334155" stroke-width="1" />
+  <rect x="425" y="165" width="165" height="50" fill="#1e293b" />
+  <text x="435" y="195" fill="#38bdf8" font-family="'JetBrains Mono', monospace" font-size="11">SKU-77419</text>
+  <text x="435" y="235" fill="#f8fafc" font-family="'Inter', sans-serif" font-size="11" font-weight="600">Managed Switch 48-Port</text>
+  <text x="435" y="255" fill="#94a3b8" font-family="'Inter', sans-serif" font-size="10">Available: 14 units</text>
+  <text x="435" y="275" fill="#facc15" font-family="'Inter', sans-serif" font-size="10">Reserved: 6 units</text>
+  <rect x="435" y="287" width="80" height="18" rx="3" fill="#064e3b" />
+  <text x="443" y="300" fill="#34d399" font-family="'JetBrains Mono', monospace" font-size="9">LOCK ACTIVE</text>
+</svg>
