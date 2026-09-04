@@ -13,10 +13,10 @@ export const Footer = ({ profile }) => {
   };
 
   const currentYear = new Date().getFullYear();
-  const name = profile?.fullName || 'Amit Kumar';
-  const role = profile?.title || 'Java Software Developer';
-  const location = profile?.location || 'Bengaluru, India';
-  const roleBadge = profile?.roleBadge || 'Java Developer';
+  const name = profile?.fullName || '';
+  const role = profile?.title || 'Software Engineer';
+  const location = profile?.location || '';
+  const roleBadge = profile?.roleBadge || 'Software Engineer';
   const avatarImage = resolveAssetUrl(profile?.avatarUrl) || '/default-avatar.svg';
 
   const navLinks = [

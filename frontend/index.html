@@ -9,22 +9,40 @@
     <meta name="theme-color" content="#0d1117" />
     
     <!-- Primary SEO Meta Tags -->
-    <title>Amit Kumar | AI Engineer & Full-Stack Developer</title>
-    <meta name="title" content="Amit Kumar | AI Engineer — Conversational AI & LLM Systems" />
-    <meta name="description" content="Conversational AI Engineer specializing in multi-agent assistants, enterprise RAG pipelines, and intent-driven LLM architectures." />
-    <meta name="keywords" content="Amit Kumar, AI Engineer, Conversational AI, LangChain, LangGraph, LlamaIndex, RAG, Python, Spring Boot, Docker, LLMOps" />
-    <meta name="author" content="Amit Kumar" />
+    <title>Portfolio</title>
+    <meta name="title" content="Portfolio" />
+    <meta name="description" content="Software Engineering & Systems Portfolio" />
+    <meta name="keywords" content="Portfolio, Software Engineer, Full-Stack Developer, AI, React, Java, Spring Boot, MySQL" />
+    <meta name="author" content="Portfolio" />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://amitdevloper.netlify.app" />
-    <meta property="og:title" content="Amit Kumar | AI Engineer & Full-Stack Developer" />
-    <meta property="og:description" content="Conversational AI Engineer specializing in multi-agent assistants, enterprise RAG pipelines, and intent-driven LLM architectures." />
+    <meta property="og:title" content="Portfolio" />
+    <meta property="og:description" content="Software Engineering & Systems Portfolio" />
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary" />
-    <meta property="twitter:title" content="Amit Kumar | AI Engineer & Full-Stack Developer" />
-    <meta property="twitter:description" content="Conversational AI Engineer specializing in multi-agent assistants, enterprise RAG pipelines, and intent-driven LLM architectures." />
+    <meta property="twitter:title" content="Portfolio" />
+    <meta property="twitter:description" content="Software Engineering & Systems Portfolio" />
+
+    <!-- Instant Tab Branding Bootstrap from local cache (prevents flashing default names) -->
+    <script>
+      (function() {
+        try {
+          var cached = localStorage.getItem('portfolio_cached_data');
+          if (cached) {
+            var parsed = JSON.parse(cached);
+            if (parsed && parsed.profile && parsed.profile.fullName) {
+              var n = parsed.profile.fullName.trim();
+              var r = (parsed.profile.title || '').trim();
+              if (n) {
+                document.title = r ? (n + ' | ' + r) : (n + ' | Portfolio');
+              }
+            }
+          }
+        } catch(e) {}
+      })();
+    </script>
 
     <!-- Preconnect to Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />

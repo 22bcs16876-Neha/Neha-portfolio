@@ -97,7 +97,7 @@ export const Navbar = ({ profile }) => {
     }
   };
 
-  const nameDisplay = profile?.fullName || 'Amit Kumar';
+  const nameDisplay = profile?.fullName || '';
 
   return (
     <>
@@ -145,7 +145,7 @@ export const Navbar = ({ profile }) => {
               e.target.src = '/default-avatar.svg';
             }}
           />
-          <span>{nameDisplay}</span>
+          {nameDisplay ? <span>{nameDisplay}</span> : <span>Portfolio</span>}
           <span className="badge badge-blue nav-role-badge" style={{ fontSize: '0.6875rem', padding: '0.1rem 0.4rem', marginLeft: '0.25rem' }}>
             {profile?.roleBadge || 'Developer'}
           </span>

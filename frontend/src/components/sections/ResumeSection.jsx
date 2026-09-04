@@ -38,7 +38,7 @@ export const ResumeSection = ({ profile }) => {
                 <FileText size={20} />
               </div>
               <h3 style={{ fontSize: '1.25rem', fontWeight: 600 }}>
-                {profile?.fullName || 'Amit Kumar'} — Resume
+                {profile?.fullName ? `${profile.fullName} — Resume` : 'Curriculum Vitae'}
               </h3>
             </div>
             <p style={{ fontSize: '0.875rem', lineHeight: 1.6, color: 'var(--text-secondary)' }}>

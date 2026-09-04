@@ -66,6 +66,13 @@ export const Home = () => {
     };
   }, []);
 
+  // Immediately synchronize browser tab branding when profile is loaded
+  useEffect(() => {
+    if (data?.profile?.fullName) {
+      updateTabBranding(data.profile);
+    }
+  }, [data?.profile]);
+
   // Timer while initial loading is active
   useEffect(() => {
     let timer = null;
@@ -298,7 +305,7 @@ export const Home = () => {
                 }}
               >
                 {elapsed < 4
-                  ? "Connecting to Amit Kumar's Portfolio..."
+                  ? 'Connecting to Portfolio...'
                   : elapsed < 12
                   ? 'Fetching live engineering projects & profile data...'
                   : 'Waking up cloud server (free-tier spin-up in progress)...'}

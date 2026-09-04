@@ -3,14 +3,14 @@ import { ArrowRight, FileText, Github, Linkedin, Code, Mail, MapPin, Clock, Serv
 import { resolveAssetUrl } from '../../utils/assets';
 
 export const Hero = ({ profile }) => {
-  const name = profile?.fullName || 'Amit Kumar';
+  const name = profile?.fullName || '';
   const displayTitle = (profile?.title && profile.title !== 'NA' && profile.title.trim().length > 0)
     ? profile.title
-    : 'Java Software Developer';
-  const bio = profile?.bio || 'I build scalable backend systems and modern web applications using Java, Spring Boot, React and MySQL.';
+    : 'Software Engineer';
+  const bio = profile?.bio || '';
   const roleBadge = profile?.roleBadge || 'Software Engineer';
   const statusText = profile?.statusText || 'Open to Opportunities';
-  const location = profile?.location || 'Bengaluru, India';
+  const location = profile?.location || '';
   const avatarImage = resolveAssetUrl(profile?.avatarUrl) || '/default-avatar.svg';
   const techStackList = profile?.heroTechStack
     ? profile.heroTechStack.split(',').map((t) => t.trim()).filter(Boolean)

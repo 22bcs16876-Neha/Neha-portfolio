@@ -4,13 +4,18 @@ import { resolveAssetUrl } from './assets';
  * Generates a dynamic circular monogram favicon (e.g. "AK") on a canvas
  * when no profile picture is uploaded or while loading.
  */
-function createMonogramFavicon(name = 'Amit Kumar') {
+function createMonogramFavicon(name = '') {
   try {
+    const trimmed = (name || '').trim();
+    if (!trimmed) {
+      return '/default-avatar.svg';
+    }
+
     const canvas = document.createElement('canvas');
     canvas.width = 64;
     canvas.height = 64;
     const ctx = canvas.getContext('2d');
-    if (!ctx) return '/favicon.ico';
+    if (!ctx) return '/default-avatar.svg';
 
     // Outer background circle
     ctx.beginPath();
@@ -25,8 +30,8 @@ function createMonogramFavicon(name = 'Amit Kumar') {
     ctx.stroke();
 
     // Get initials (up to 2 chars)
-    const parts = name.trim().split(/\s+/).filter(Boolean);
-    let initials = 'AK';
+    const parts = trimmed.split(/\s+/).filter(Boolean);
+    let initials = '';
     if (parts.length >= 2) {
       initials = (parts[0][0] + parts[1][0]).toUpperCase();
     } else if (parts.length === 1 && parts[0].length > 0) {
@@ -42,7 +47,7 @@ function createMonogramFavicon(name = 'Amit Kumar') {
 
     return canvas.toDataURL('image/png');
   } catch (e) {
-    return '/favicon.ico';
+    return '/default-avatar.svg';
   }
 }
 
@@ -76,9 +81,18 @@ export function updateTabBranding(profile) {
   if (typeof document === 'undefined' || !profile) return;
 
   // 1. Update Browser Tab Title
-  const name = (profile.fullName || 'Amit Kumar').trim();
-  const role = (profile.title || 'AI Engineer & Full-Stack Developer').trim();
-  document.title = role ? `${name} | ${role}` : name;
+  const name = (profile.fullName || '').trim();
+  const role = (profile.title || '').trim();
+
+  if (name && role) {
+    document.title = `${name} | ${role}`;
+  } else if (name) {
+    document.title = `${name} | Portfolio`;
+  } else if (role) {
+    document.title = `Portfolio | ${role}`;
+  } else {
+    document.title = 'Portfolio';
+  }
 
   // 2. Resolve avatar source URL
   const rawAvatar = profile.avatarUrl;
@@ -86,8 +100,12 @@ export function updateTabBranding(profile) {
 
   // If no avatar is configured, generate clean monogram favicon immediately
   if (!avatarSrc || avatarSrc.trim() === '') {
-    const monogram = createMonogramFavicon(name);
-    setFaviconHref(monogram);
+    if (name) {
+      const monogram = createMonogramFavicon(name);
+      setFaviconHref(monogram);
+    } else {
+      setFaviconHref('/default-avatar.svg');
+    }
     return;
   }
 
