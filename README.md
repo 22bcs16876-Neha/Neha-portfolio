@@ -1,234 +1,247 @@
-# AI Engineer Portfolio
+# Neha — AI Engineer Portfolio
 
-A modern, full-stack portfolio website showcasing my experience, projects, technical skills, and work in **Artificial Intelligence, Generative AI, Conversational AI, and Agentic AI**.
+A full-stack personal portfolio built to showcase my work, experience, projects, technical skills, certifications, achievements, and coding profiles.
 
-The portfolio is designed not just as a personal website, but as a representation of my hands-on experience building AI-powered applications and production-oriented software systems.
-
-## 🌐 Live Portfolio
-
-**Portfolio:** Add your deployed portfolio URL here
+Unlike a traditional static portfolio, this project includes a **custom Admin CMS** backed by a Spring Boot REST API, allowing portfolio content to be managed dynamically through an authenticated dashboard.
 
 ---
 
-## 👩‍💻 About Me
+## ✨ Overview
 
-I am an **AI Engineer** with a strong foundation in full-stack development and practical experience building AI-powered applications.
-
-My work focuses on:
+This portfolio represents my journey as an **AI Engineer**, with a focus on:
 
 * Generative AI
 * Agentic AI
 * Conversational AI
 * LLM-powered applications
-* AI agents and workflows
-* Google ADK
-* Dialogflow CX
-* Gemini
-* Vertex AI
-* Backend API development
+* AI Agents & workflows
 * Full-stack application development
+* Backend engineering
+* Cloud & API-based systems
 
-I enjoy building systems where AI is integrated with real-world applications rather than being limited to experimentation or model training alone.
-
----
-
-## 🚀 Featured Projects
-
-### 🛍️ Mr.Shop — AI Shopping Assistant
-
-An AI-powered shopping assistant designed to provide intelligent product discovery and conversational shopping experiences.
-
-**Key concepts:**
-
-* Generative AI
-* AI agents
-* Conversational interaction
-* Product discovery
-* Intelligent recommendations
-* Backend API integration
+The application is built as a complete full-stack system rather than a static frontend, with a React client communicating with a Spring Boot backend through REST APIs.
 
 ---
 
-### 🏥 Enterprise Healthcare Voice Assistant
+## 🚀 Features
 
-A conversational AI solution designed for healthcare use cases with a focus on natural voice-based interaction and workflow automation.
+### Public Portfolio
 
-**Key concepts:**
+* Responsive portfolio website
+* Hero / introduction section
+* About section
+* Technical skills
+* Professional experience
+* Projects & case studies
+* Education
+* Certifications
+* Achievements
+* Coding profiles
+* Resume section
+* Contact form
+* Social / external profile links
+* Light & dark theme
 
-* Conversational AI
-* Voice AI
-* Dialogflow CX
-* Gemini
-* Google Cloud
-* Intent and entity recognition
-* Conversational flows
-* Enterprise AI workflows
+### Admin CMS
+
+A protected admin dashboard allows portfolio content to be managed without changing the source code.
+
+Admin functionality includes:
+
+* Dashboard & portfolio statistics
+* Profile management
+* Project CRUD
+* Skills CRUD
+* Experience CRUD
+* Education CRUD
+* Certification CRUD
+* Achievement CRUD
+* Coding profile management
+* Contact message management
+* Admin account management
+* Password change
+* EmailJS configuration
+* Image/file upload support
+
+### Authentication & Security
+
+* JWT-based authentication
+* Stateless Spring Security configuration
+* BCrypt password hashing
+* Protected admin routes
+* JWT request interception
+* Role-based endpoint protection
+* CORS configuration
+* Request validation
+* Global exception handling
 
 ---
 
-### 🤖 Agentic AI Applications
-
-Projects exploring the transition from traditional chatbot architectures to **agent-based AI systems** capable of reasoning, tool usage, workflow execution, and dynamic task handling.
-
-**Technologies explored:**
-
-* Google ADK
-* Gemini
-* LLMs
-* Tool calling
-* Multi-step workflows
-* Agent orchestration
-* Retrieval-Augmented Generation (RAG)
-
----
-
-## 🧠 Technical Skills
-
-### Artificial Intelligence
-
-* Generative AI
-* Large Language Models (LLMs)
-* Agentic AI
-* Conversational AI
-* Prompt Engineering
-* RAG
-* AI Agents
-* Tool Calling
-* AI Workflow Orchestration
-
-### Google AI & Cloud
-
-* Google ADK
-* Dialogflow CX
-* Gemini
-* Vertex AI
-* Google Cloud Platform
-
-### Programming
-
-* Python
-* Java
-* JavaScript
-* SQL
-
-### Backend
-
-* Spring Boot
-* REST APIs
-* JWT Authentication
-* API Integration
-* Database Design
+## 🛠️ Tech Stack
 
 ### Frontend
 
-* React
-* JavaScript
-* HTML
-* CSS
-* Responsive UI Development
+* **React 18**
+* **Vite**
+* **React Router**
+* **Axios**
+* **Lucide React**
+* **EmailJS**
+* CSS / CSS Variables
 
-### Databases
+### Backend
 
-* PostgreSQL
-* MySQL
-* MongoDB
+* **Java 21**
+* **Spring Boot 3.3.3**
+* **Spring Web**
+* **Spring Data JPA**
+* **Hibernate**
+* **Spring Security**
+* **Jakarta Validation**
+* **JWT**
+* **Lombok**
 
-### Tools & Platforms
+### Database
 
-* Git
-* GitHub
+* **MySQL** — production
+* **H2** — development/testing
+
+### DevOps
+
 * Docker
-* Postman
-* VS Code
-* IntelliJ IDEA
+* Docker Compose
+* Nginx
+* Maven
 
 ---
 
-## 🏗️ Portfolio Architecture
-
-The portfolio follows a full-stack architecture:
+## 🏗️ Architecture
 
 ```text
-                    ┌─────────────────────┐
-                    │      Frontend       │
-                    │       React         │
-                    └──────────┬──────────┘
+                    ┌──────────────────────┐
+                    │      Portfolio       │
+                    │       Visitor        │
+                    └──────────┬───────────┘
                                │
-                               │ REST APIs
                                ▼
-                    ┌─────────────────────┐
-                    │       Backend       │
-                    │    Spring Boot      │
-                    └──────────┬──────────┘
+                    ┌──────────────────────┐
+                    │    React Frontend    │
+                    │      + Vite          │
+                    └──────────┬───────────┘
                                │
-                    ┌──────────┴──────────┐
-                    ▼                     ▼
-             ┌─────────────┐      ┌─────────────┐
-             │  Database   │      │     Auth    │
-             │ PostgreSQL  │      │ JWT Security│
-             └─────────────┘      └─────────────┘
+                         REST API / Axios
+                               │
+                               ▼
+                    ┌──────────────────────┐
+                    │   Spring Boot API    │
+                    │                      │
+                    │ Controllers          │
+                    │ Services             │
+                    │ Repositories         │
+                    │ Security / JWT       │
+                    └──────────┬───────────┘
+                               │
+                               ▼
+                    ┌──────────────────────┐
+                    │       Database       │
+                    │    MySQL / H2        │
+                    └──────────────────────┘
+
+
+              Admin
+                │
+                ▼
+       ┌──────────────────┐
+       │ Admin Login      │
+       └────────┬─────────┘
+                │
+             JWT Auth
+                │
+                ▼
+       ┌──────────────────┐
+       │ Admin Dashboard  │
+       │                  │
+       │ CRUD Operations  │
+       │ Messages         │
+       │ Profile          │
+       │ Settings         │
+       └──────────────────┘
 ```
 
-The application separates the presentation layer, backend services, authentication, and data persistence to maintain a clean and scalable architecture.
-
 ---
 
-## ✨ Features
-
-### Portfolio
-
-* Professional introduction
-* About section
-* Technical skills
-* Experience
-* Projects
-* Education
-* Contact section
-
-### Project Showcase
-
-Projects are presented with:
-
-* Project descriptions
-* Technologies used
-* Key features
-* Links to repositories/live applications
-
-### Admin Management
-
-The application includes an authenticated admin workflow for managing portfolio content.
-
-Admin functionality can be used to manage dynamic portfolio information without modifying the frontend code manually.
-
-### Authentication
-
-The backend uses **JWT-based authentication** to secure protected endpoints and administrative functionality.
-
----
-
-## 📁 Project Structure
+## 📂 Project Structure
 
 ```text
-portfolio/
+Neha-portfolio/
 │
 ├── frontend/
-│   ├── src/
 │   ├── public/
-│   ├── components/
-│   ├── pages/
-│   └── ...
+│   │   ├── favicon.svg
+│   │   ├── robots.txt
+│   │   └── sitemap.xml
+│   │
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── common/
+│   │   │   ├── sections/
+│   │   │   └── admin/
+│   │   │
+│   │   ├── context/
+│   │   │   ├── AuthContext
+│   │   │   ├── ThemeContext
+│   │   │   └── ToastContext
+│   │   │
+│   │   ├── pages/
+│   │   │   ├── Home
+│   │   │   ├── AdminLogin
+│   │   │   ├── AdminDashboard
+│   │   │   ├── AdminProjects
+│   │   │   ├── AdminSkills
+│   │   │   ├── AdminExperience
+│   │   │   ├── AdminEducation
+│   │   │   ├── AdminCertifications
+│   │   │   ├── AdminAchievements
+│   │   │   ├── AdminCodingProfiles
+│   │   │   ├── AdminMessages
+│   │   │   └── AdminSettings
+│   │   │
+│   │   ├── services/
+│   │   │   ├── api.js
+│   │   │   ├── portfolioService.js
+│   │   │   └── adminService.js
+│   │   │
+│   │   ├── App.jsx
+│   │   ├── main.jsx
+│   │   └── index.css
+│   │
+│   ├── package.json
+│   ├── vite.config.js
+│   ├── Dockerfile
+│   └── nginx.conf
 │
 ├── backend/
-│   ├── src/
-│   │   └── main/
-│   │       ├── java/
-│   │       └── resources/
-│   └── ...
+│   ├── src/main/java/com/portfolio/
+│   │   ├── config/
+│   │   ├── controller/
+│   │   ├── dto/
+│   │   ├── entity/
+│   │   ├── exception/
+│   │   ├── repository/
+│   │   ├── security/
+│   │   └── service/
+│   │
+│   ├── src/main/resources/
+│   │   ├── application.yml
+│   │   └── application-dev.yml
+│   │
+│   ├── pom.xml
+│   └── Dockerfile
 │
-├── docker/
-│
-├── README.md
-└── ...
+├── docker-compose.yml
+├── .env.example
+├── .gitignore
+└── README.md
 ```
 
 ---
@@ -237,28 +250,74 @@ portfolio/
 
 ### Prerequisites
 
-Make sure the following are installed:
+Make sure you have:
 
-* Node.js
+* Java 21
+* Maven 3.9+
+* Node.js 18+
 * npm
-* Java
-* Maven
-* PostgreSQL
+* MySQL 8+ or Docker
 * Git
 
 ---
 
-## 🔧 Frontend Setup
-
-Clone the repository:
+## 🔹 1. Clone the Repository
 
 ```bash
-git clone <YOUR_GITHUB_REPOSITORY_URL>
-
-cd portfolio
+git clone <YOUR_REPOSITORY_URL>
+cd Neha-portfolio-main
 ```
 
-Navigate to the frontend:
+---
+
+## 🔹 2. Backend Setup
+
+Navigate to the backend:
+
+```bash
+cd backend
+```
+
+Install/build the project:
+
+```bash
+mvn clean install
+```
+
+Configure the required environment variables.
+
+Example:
+
+```env
+DB_URL=jdbc:mysql://localhost:3306/portfolio_db
+DB_USERNAME=root
+DB_PASSWORD=your_password
+
+JWT_SECRET=your_secret_key
+JWT_EXPIRATION_MS=86400000
+
+ADMIN_USERNAME=admin
+ADMIN_PASSWORD=your_admin_password
+ADMIN_EMAIL=your_email
+```
+
+Run the backend:
+
+```bash
+mvn spring-boot:run
+```
+
+Backend API:
+
+```text
+http://localhost:8080
+```
+
+---
+
+## 🔹 3. Frontend Setup
+
+Open another terminal:
 
 ```bash
 cd frontend
@@ -270,10 +329,10 @@ Install dependencies:
 npm install
 ```
 
-Create the required environment variables:
+Create a `.env` file:
 
 ```env
-VITE_API_URL=http://localhost:8080
+VITE_API_URL=http://localhost:8080/api
 ```
 
 Start the development server:
@@ -282,7 +341,7 @@ Start the development server:
 npm run dev
 ```
 
-The frontend will be available at:
+Frontend:
 
 ```text
 http://localhost:5173
@@ -290,196 +349,275 @@ http://localhost:5173
 
 ---
 
-## 🔧 Backend Setup
+## 🐳 Docker Setup
 
-Navigate to the backend:
+The project also supports containerized development.
 
-```bash
-cd backend
-```
-
-Configure the application environment variables.
-
-Example:
-
-```env
-DB_URL=jdbc:postgresql://localhost:5432/portfolio
-DB_USERNAME=your_username
-DB_PASSWORD=your_password
-
-JWT_SECRET=your_jwt_secret
-```
-
-Build the backend:
-
-```bash
-mvn clean install
-```
-
-Run the application:
-
-```bash
-mvn spring-boot:run
-```
-
-The backend will run on:
-
-```text
-http://localhost:8080
-```
-
----
-
-## 🔐 Environment Variables
-
-Do not commit secrets or credentials to GitHub.
-
-Example environment configuration:
-
-```env
-# Backend
-DB_URL=
-DB_USERNAME=
-DB_PASSWORD=
-
-JWT_SECRET=
-
-# Frontend
-VITE_API_URL=
-```
-
-Add environment files to `.gitignore`:
-
-```text
-.env
-.env.local
-application-local.properties
-```
-
----
-
-## 🔑 Authentication Flow
-
-The application uses JWT-based authentication for protected resources.
-
-```text
-User
-  │
-  ▼
-Login
-  │
-  ▼
-Backend Authentication
-  │
-  ▼
-JWT Token
-  │
-  ▼
-Frontend
-  │
-  ▼
-Authenticated API Requests
-  │
-  ▼
-Protected Backend Endpoints
-```
-
-This allows administrative functionality to remain protected while keeping the public portfolio accessible to visitors.
-
----
-
-## 🐳 Docker
-
-The application can also be containerized using Docker.
-
-Build the required images:
-
-```bash
-docker build .
-```
-
-Run the containers using Docker Compose when configured:
+From the project root:
 
 ```bash
 docker compose up --build
 ```
 
----
+This starts the required application services through Docker Compose.
 
-## 📡 API
+To stop the containers:
 
-The backend exposes REST APIs for portfolio-related functionality.
-
-Typical resources include:
-
-```text
-/api/auth
-/api/projects
-/api/skills
-/api/experience
-/api/education
-/api/contact
+```bash
+docker compose down
 ```
 
-Protected endpoints require valid authentication credentials.
+---
+
+## 🔐 Admin Dashboard
+
+The portfolio contains a separate protected administration panel.
+
+```text
+/admin/login
+```
+
+After successful authentication, the admin can manage the portfolio through the dashboard.
+
+### Admin Modules
+
+```text
+Dashboard
+│
+├── Profile
+├── Projects
+├── Skills
+├── Experience
+├── Education
+├── Certifications
+├── Achievements
+├── Coding Profiles
+├── Messages
+└── Settings
+```
+
+Changes made through the CMS are persisted through the backend API and database.
 
 ---
 
-## 🎯 Why I Built This
+## 🔑 Authentication Flow
 
-This project demonstrates my approach to building modern software systems by combining:
+Authentication is implemented using JWT.
 
-**AI + Backend + Frontend + Cloud + Security**
+```text
+Admin
+  │
+  ▼
+Login
+  │
+  ▼
+POST /api/auth/login
+  │
+  ▼
+Spring Security
+  │
+  ▼
+JWT Token
+  │
+  ▼
+Frontend stores authentication state
+  │
+  ▼
+Axios attaches Bearer Token
+  │
+  ▼
+Protected /api/admin/** endpoints
+```
 
-Rather than creating a static portfolio, I wanted to build a system that demonstrates real engineering concepts such as:
+The backend validates the JWT before allowing access to protected resources.
 
-* REST API architecture
-* Authentication and authorization
-* Database integration
-* Dynamic content management
-* Frontend-backend communication
-* Deployment
-* Containerization
-* Scalable application design
+---
 
-It also provides a central place to showcase my journey from traditional software development toward **Generative AI and Agentic AI engineering**.
+## 📡 API Overview
+
+### Public APIs
+
+```text
+GET    /api/profile
+GET    /api/skills
+GET    /api/skills/category/{category}
+GET    /api/experience
+GET    /api/projects
+GET    /api/projects/featured
+GET    /api/projects/{slug}
+GET    /api/education
+GET    /api/certifications
+GET    /api/achievements
+GET    /api/coding-profiles
+POST   /api/contact
+```
+
+### Authentication
+
+```text
+POST   /api/auth/login
+POST   /api/auth/change-password
+```
+
+### Admin APIs
+
+```text
+GET/PUT       /api/admin/profile
+
+POST/PUT/DELETE
+              /api/admin/projects
+
+POST/PUT/DELETE
+              /api/admin/skills
+
+POST/PUT/DELETE
+              /api/admin/experience
+
+POST/PUT/DELETE
+              /api/admin/education
+
+POST/PUT/DELETE
+              /api/admin/certifications
+
+POST/PUT/DELETE
+              /api/admin/achievements
+
+POST/PUT/DELETE
+              /api/admin/coding-profiles
+
+GET           /api/admin/messages
+PUT           /api/admin/messages/{id}/status
+
+GET           /api/admin/dashboard
+```
+
+---
+
+## 📧 Contact System
+
+The portfolio includes a contact workflow that allows visitors to submit messages.
+
+The system supports:
+
+* Contact form validation
+* Backend message persistence
+* Admin message management
+* Message status updates
+* EmailJS integration for email delivery/configuration
+
+---
+
+## 🎨 Design Philosophy
+
+The UI follows a clean editorial-style design with a focus on readability and content.
+
+### Design principles
+
+* Minimal visual noise
+* Strong typography
+* Responsive layouts
+* Consistent spacing
+* Solid colors
+* Clear hierarchy
+* Light and dark themes
+* Subtle transitions
+* Mobile-friendly experience
+
+The portfolio intentionally avoids unnecessary visual effects in favor of a professional developer-focused presentation.
+
+---
+
+## 🔒 Security
+
+Security considerations implemented in the project include:
+
+* JWT authentication
+* BCrypt password hashing
+* Stateless authentication
+* Protected admin endpoints
+* Protected frontend admin routes
+* CORS configuration
+* Jakarta request validation
+* Centralized exception handling
+* Environment-based configuration
+* No hardcoded production credentials
+
+**Never commit `.env` files, database credentials, JWT secrets, or other sensitive configuration to the repository.**
+
+---
+
+## 📱 Responsive Design
+
+The portfolio is designed to work across:
+
+* Desktop
+* Laptop
+* Tablet
+* Mobile
+
+The frontend uses responsive layouts and reusable components to maintain consistency across screen sizes.
+
+---
+
+## 📌 Key Engineering Concepts Demonstrated
+
+This project demonstrates practical implementation of:
+
+* Full-stack application architecture
+* REST API development
+* React component architecture
+* Spring Boot backend development
+* Spring Data JPA
+* Database persistence
+* JWT authentication
+* Spring Security
+* CRUD operations
+* DTO-based API design
+* Global exception handling
+* Input validation
+* CORS
+* File uploads
+* Frontend-backend integration
+* Docker containerization
+* Environment-based configuration
+* Responsive UI development
 
 ---
 
 ## 🔮 Future Improvements
 
-Planned improvements include:
+Potential future additions include:
 
 * AI-powered portfolio assistant
-* RAG-based project discovery
-* Voice interaction
-* Intelligent project recommendations
-* Agentic portfolio assistant
-* Analytics dashboard
-* Improved CMS capabilities
+* RAG-based portfolio Q&A
+* Voice-enabled portfolio interaction
+* AI project recommendation system
+* GitHub activity integration
 * Automated deployment pipeline
-* Enhanced observability and monitoring
+* Portfolio analytics
+* Improved admin analytics
+* AI-powered resume/job matching
 
 ---
 
-## 📬 Contact
+## 👩‍💻 About
 
-If you are interested in discussing **AI Engineering, Generative AI, Agentic AI, Conversational AI, or software engineering opportunities**, feel free to connect with me.
+Built and maintained by **Neha**, an AI Engineer interested in building practical AI systems and full-stack applications.
 
-**LinkedIn:** Add your LinkedIn URL
+My primary areas of interest include:
 
-**GitHub:** Add your GitHub URL
-
-**Email:** Add your email
+**Generative AI • Agentic AI • Conversational AI • LLM Applications • AI Agents • Full-Stack Engineering**
 
 ---
 
-## ⭐ Support
+## 📬 Connect
 
-If you find this project interesting, consider giving the repository a ⭐ on GitHub.
+* **GitHub:** `<(https://github.com/22bcs16876-Neha)>`
+* **LinkedIn:** `<(https://www.linkedin.com/in/neha-k-nandini/)>`
+* **Email:** `<(nehakumarinandini@gmail.com)>`
 
 ---
 
-## 📄 License
+## ⭐ If You Like This Project
 
-This project is intended for personal portfolio and demonstration purposes.
+If you find the project useful or interesting, consider giving the repository a ⭐.
