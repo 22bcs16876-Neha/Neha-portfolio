@@ -612,9 +612,9 @@ My primary areas of interest include:
 
 ## 📬 Connect
 
-* **GitHub:** `<(https://github.com/22bcs16876-Neha)>`
-* **LinkedIn:** `<(https://www.linkedin.com/in/neha-k-nandini/)>`
-* **Email:** `<(nehakumarinandini@gmail.com)>`
+* **GitHub:** `https://github.com/22bcs16876-Neha`
+* **LinkedIn:** `https://www.linkedin.com/in/neha-k-nandini/`
+* **Email:** `nehakumarinandini@gmail.com`
 
 ---
 
