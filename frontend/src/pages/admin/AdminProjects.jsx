@@ -4,6 +4,7 @@ import { portfolioService } from '../../services/portfolioService';
 import { useToast } from '../../context/ToastContext';
 import { Modal } from '../../components/common/Modal';
 import { Plus, Edit2, Trash2, ExternalLink, Github, Loader2, Upload, Image as ImageIcon, X } from 'lucide-react';
+import { resolveAssetUrl } from '../../utils/assets';
 
 export const AdminProjects = () => {
   const { addToast } = useToast();
@@ -30,6 +31,7 @@ export const AdminProjects = () => {
   };
 
   const [formData, setFormData] = useState(initialFormState);
+  const [imagePreview, setImagePreview] = useState('');
   const [saving, setSaving] = useState(false);
   const [uploadingImage, setUploadingImage] = useState(false);
   const projectImageInputRef = useRef(null);
@@ -43,6 +45,10 @@ export const AdminProjects = () => {
       return;
     }
 
+    // Set immediate client-side preview for instant visual feedback
+    const localUrl = URL.createObjectURL(file);
+    setImagePreview(localUrl);
+
     setUploadingImage(true);
     try {
       const data = await adminService.uploadFile(file);
@@ -52,6 +58,7 @@ export const AdminProjects = () => {
       }
     } catch (err) {
       addToast('Failed to upload image', 'error');
+      setImagePreview('');
     } finally {
       setUploadingImage(false);
       if (projectImageInputRef.current) projectImageInputRef.current.value = '';
@@ -76,6 +83,7 @@ export const AdminProjects = () => {
 
   const handleOpenCreate = () => {
     setCurrentProject(null);
+    setImagePreview('');
     setFormData({
       ...initialFormState,
       displayOrder: projects.length + 1,
@@ -85,6 +93,7 @@ export const AdminProjects = () => {
 
   const handleOpenEdit = (project) => {
     setCurrentProject(project);
+    setImagePreview(project.imageUrl ? resolveAssetUrl(project.imageUrl) : '');
     setFormData({
       title: project.title || '',
       slug: project.slug || '',
@@ -183,6 +192,7 @@ export const AdminProjects = () => {
             <thead>
               <tr style={{ borderBottom: '1px solid var(--border-subtle)', backgroundColor: 'var(--bg-subtle)' }}>
                 <th style={{ padding: '0.875rem 1.25rem', fontWeight: 600, width: '60px' }}>Order</th>
+                <th style={{ padding: '0.875rem 1.25rem', fontWeight: 600, width: '70px' }}>Preview</th>
                 <th style={{ padding: '0.875rem 1.25rem', fontWeight: 600 }}>Project Title</th>
                 <th style={{ padding: '0.875rem 1.25rem', fontWeight: 600 }}>Status</th>
                 <th style={{ padding: '0.875rem 1.25rem', fontWeight: 600 }}>Technologies</th>
@@ -194,6 +204,18 @@ export const AdminProjects = () => {
                 <tr key={p.id} style={{ borderBottom: '1px solid var(--border-subtle)' }}>
                   <td style={{ padding: '1rem 1.25rem', fontFamily: 'var(--font-mono)', color: 'var(--text-muted)' }}>
                     {p.displayOrder}
+                  </td>
+                  <td style={{ padding: '0.75rem 1.25rem' }}>
+                    <div style={{ width: '52px', height: '34px', borderRadius: 'var(--radius-sm)', overflow: 'hidden', border: '1px solid var(--border-subtle)', backgroundColor: 'var(--bg-subtle)' }}>
+                      <img
+                        src={resolveAssetUrl(p.imageUrl) || '/projects/project-portfolio.svg'}
+                        alt={p.title}
+                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                        onError={(e) => {
+                          e.target.src = '/projects/project-portfolio.svg';
+                        }}
+                      />
+                    </div>
                   </td>
                   <td style={{ padding: '1rem 1.25rem' }}>
                     <div style={{ fontWeight: 600, color: 'var(--text-primary)' }}>{p.title}</div>
@@ -337,14 +359,21 @@ export const AdminProjects = () => {
           <div className="form-group">
             <label className="form-label" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <span>Project Thumbnail / Architecture Diagram</span>
-              {formData.imageUrl && (
+              {(imagePreview || formData.imageUrl) && (
                 <span style={{ fontSize: '0.75rem', color: 'var(--accent-emerald)' }}>Image Selected</span>
               )}
             </label>
             <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center', marginBottom: '0.5rem', flexWrap: 'wrap' }}>
-              {formData.imageUrl && (
-                <div style={{ width: '56px', height: '38px', borderRadius: 'var(--radius-sm)', overflow: 'hidden', border: '1px solid var(--border-subtle)', flexShrink: 0 }}>
-                  <img src={formData.imageUrl} alt="preview" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              {(imagePreview || formData.imageUrl) && (
+                <div style={{ width: '64px', height: '42px', borderRadius: 'var(--radius-sm)', overflow: 'hidden', border: '1px solid var(--border-subtle)', flexShrink: 0, backgroundColor: 'var(--bg-subtle)' }}>
+                  <img
+                    src={imagePreview || resolveAssetUrl(formData.imageUrl)}
+                    alt="preview"
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                    onError={(e) => {
+                      e.target.src = '/projects/project-portfolio.svg';
+                    }}
+                  />
                 </div>
               )}
               <input
@@ -364,10 +393,13 @@ export const AdminProjects = () => {
                 {uploadingImage ? <Loader2 className="animate-spin" size={14} /> : <Upload size={14} />}
                 <span>{uploadingImage ? 'Uploading...' : 'Upload Image from Laptop'}</span>
               </button>
-              {formData.imageUrl && (
+              {(imagePreview || formData.imageUrl) && (
                 <button
                   type="button"
-                  onClick={() => setFormData((prev) => ({ ...prev, imageUrl: '' }))}
+                  onClick={() => {
+                    setImagePreview('');
+                    setFormData((prev) => ({ ...prev, imageUrl: '' }));
+                  }}
                   className="btn btn-ghost"
                   style={{ display: 'inline-flex', alignItems: 'center', gap: '0.25rem', fontSize: '0.75rem', padding: '0.35rem 0.6rem', color: 'var(--accent-red)' }}
                 >
@@ -379,7 +411,10 @@ export const AdminProjects = () => {
               type="text"
               name="imageUrl"
               value={formData.imageUrl}
-              onChange={handleChange}
+              onChange={(e) => {
+                handleChange(e);
+                setImagePreview(resolveAssetUrl(e.target.value));
+              }}
               placeholder="/uploads/... or https://..."
               className="form-input"
               style={{ fontFamily: 'var(--font-mono)', fontSize: '0.8125rem' }}

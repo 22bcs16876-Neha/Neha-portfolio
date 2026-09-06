@@ -235,7 +235,7 @@ export const AdminCodingProfiles = () => {
               name="username"
               value={formData.username}
               onChange={handleChange}
-              placeholder="e.g. amit_codes"
+              placeholder="e.g. username"
               className="form-input"
               required
             />

@@ -1,39 +1,27 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Github, ExternalLink, ArrowRight, Layers, CheckCircle2, ShieldCheck, Terminal, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Modal } from '../common/Modal';
+import { resolveAssetUrl } from '../../utils/assets';
 
 export const Projects = ({ projects = [] }) => {
+  if (!projects || projects.length === 0) return null;
+
   const [filter, setFilter] = useState('ALL');
   const [selectedProject, setSelectedProject] = useState(null);
   const scrollerRef = useRef(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
 
+  const featuredCount = projects.filter((p) => p.isFeatured).length;
+
   const filteredProjects = projects.filter((p) => {
     if (filter === 'FEATURED') return p.isFeatured;
-    if (filter === 'AGENTS') {
-      const t = ((p.technologies || '') + ' ' + (p.title || '')).toLowerCase();
-      return t.includes('agent') || t.includes('langgraph') || t.includes('voice') || t.includes('assistant');
-    }
-    if (filter === 'RAG') {
-      const t = ((p.technologies || '') + ' ' + (p.title || '')).toLowerCase();
-      return t.includes('rag') || t.includes('retrieval') || t.includes('llamaindex') || t.includes('pinecone');
-    }
-    if (filter === 'LLMOPS') {
-      const t = ((p.technologies || '') + ' ' + (p.title || '')).toLowerCase();
-      return t.includes('ragas') || t.includes('trulens') || t.includes('fastapi') || t.includes('guardrail') || t.includes('docker');
-    }
     return true;
   });
 
-  const featuredCount = projects.filter((p) => p.isFeatured).length;
-
   const tabs = [
     { id: 'ALL', label: 'All Systems', count: projects.length },
-    { id: 'FEATURED', label: 'Featured', count: featuredCount },
-    { id: 'AGENTS', label: 'Conversational Agents' },
-    { id: 'RAG', label: 'RAG & Retrieval' },
-    { id: 'LLMOPS', label: 'LLMOps & Serving' },
+    ...(featuredCount > 0 ? [{ id: 'FEATURED', label: 'Featured', count: featuredCount }] : []),
   ];
 
   const checkScrollState = () => {
@@ -66,7 +54,7 @@ export const Projects = ({ projects = [] }) => {
 
   const getProjectImage = (project) => {
     if (project?.imageUrl && project.imageUrl.trim().length > 0) {
-      return project.imageUrl;
+      return resolveAssetUrl(project.imageUrl);
     }
     const slug = (project?.slug || '').toLowerCase();
     const title = (project?.title || '').toLowerCase();
@@ -446,7 +434,7 @@ export const Projects = ({ projects = [] }) => {
         <Modal
           isOpen={!!selectedProject}
           onClose={() => setSelectedProject(null)}
-          title={selectedProject?.title || 'System Overview'}
+          title={selectedProject?.title || ''}
           maxWidth="750px"
         >
           {selectedProject && (

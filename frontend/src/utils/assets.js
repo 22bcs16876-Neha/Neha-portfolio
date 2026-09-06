@@ -15,12 +15,23 @@ export const resolveAssetUrl = (url) => {
   }
 
   if (trimmed.startsWith('/uploads/') || trimmed.startsWith('uploads/')) {
+    const cleanPath = trimmed.startsWith('/') ? trimmed : `/${trimmed}`;
     const rawBase = import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL || '';
     if (rawBase && rawBase !== '/api') {
       const serverBase = rawBase.replace(/\/api\/?$/, '').replace(/\/+$/, '');
-      const cleanPath = trimmed.startsWith('/') ? trimmed : `/${trimmed}`;
       return `${serverBase}${cleanPath}`;
     }
+
+    // When deployed (e.g. Netlify) and VITE_API_URL is unset or '/api', point to live Render backend
+    if (
+      typeof window !== 'undefined' &&
+      !window.location.hostname.includes('localhost') &&
+      !window.location.hostname.includes('127.0.0.1')
+    ) {
+      return `https://portfolio-backend-6qfo.onrender.com${cleanPath}`;
+    }
+
+    return cleanPath;
   }
 
   return trimmed;

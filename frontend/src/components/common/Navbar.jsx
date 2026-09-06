@@ -1,24 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, FileText, Lock, ExternalLink, QrCode, Globe, Copy, Check } from 'lucide-react';
+import { Menu, X, FileText, Lock, Share2 } from 'lucide-react';
 import { ThemeToggle } from './ThemeToggle';
-import { Modal } from './Modal';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { AdminLoginModal } from './AdminLoginModal';
+import { ShareProfileModal } from './ShareProfileModal';
 import { resolveAssetUrl } from '../../utils/assets';
 
 export const Navbar = ({ profile }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [qrModalOpen, setQrModalOpen] = useState(false);
+  const [shareModalOpen, setShareModalOpen] = useState(false);
   const [adminModalOpen, setAdminModalOpen] = useState(false);
-  const [copied, setCopied] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('hero');
   const location = useLocation();
   const navigate = useNavigate();
   const { isAuthenticated } = useAuth();
-
-  const localWifiUrl = 'http://192.168.0.103:5173';
 
   // Check URL query ?admin_login=true to auto-open modal
   useEffect(() => {
@@ -38,12 +35,6 @@ export const Navbar = ({ profile }) => {
     } else {
       setAdminModalOpen(true);
     }
-  };
-
-  const handleCopyLink = () => {
-    navigator.clipboard.writeText(localWifiUrl);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
   };
 
   useEffect(() => {
@@ -146,9 +137,11 @@ export const Navbar = ({ profile }) => {
             }}
           />
           {nameDisplay ? <span>{nameDisplay}</span> : <span>Portfolio</span>}
-          <span className="badge badge-blue nav-role-badge" style={{ fontSize: '0.6875rem', padding: '0.1rem 0.4rem', marginLeft: '0.25rem' }}>
-            {profile?.roleBadge || 'Developer'}
-          </span>
+          {profile?.roleBadge && (
+            <span className="badge badge-blue nav-role-badge" style={{ fontSize: '0.6875rem', padding: '0.1rem 0.4rem', marginLeft: '0.25rem' }}>
+              {profile.roleBadge}
+            </span>
+          )}
         </a>
 
         {/* Desktop Navigation */}
@@ -194,12 +187,12 @@ export const Navbar = ({ profile }) => {
 
           <button
             type="button"
-            onClick={() => setQrModalOpen(true)}
+            onClick={() => setShareModalOpen(true)}
             className="btn-icon"
-            aria-label="Scan QR to view on mobile"
-            title="Scan QR Code to open on Mobile"
+            aria-label="Share profile"
+            title="Share Profile"
           >
-            <QrCode size={16} />
+            <Share2 size={16} />
           </button>
 
           <button
@@ -276,6 +269,32 @@ export const Navbar = ({ profile }) => {
             type="button"
             onClick={() => {
               setIsOpen(false);
+              setShareModalOpen(true);
+            }}
+            style={{
+              width: '100%',
+              marginTop: '0.625rem',
+              minHeight: '44px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '0.5rem',
+              backgroundColor: 'var(--accent-blue-subtle)',
+              border: '1px solid var(--border-subtle)',
+              borderRadius: 'var(--radius-sm)',
+              color: 'var(--accent-blue)',
+              fontSize: '0.875rem',
+              fontWeight: 600,
+              cursor: 'pointer',
+            }}
+          >
+            <Share2 size={16} />
+            <span>Share Profile</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              setIsOpen(false);
               handleAdminClick();
             }}
             style={{
@@ -324,122 +343,6 @@ export const Navbar = ({ profile }) => {
     {/* Spacer to prevent page content from being obscured by fixed navbar */}
     <div style={{ height: '4rem', width: '100%' }} aria-hidden="true" />
 
-    {/* Mobile QR Code Modal (Same Wi-Fi) */}
-    <Modal
-      isOpen={qrModalOpen}
-      onClose={() => setQrModalOpen(false)}
-      title="View on Mobile (Same Wi-Fi)"
-      maxWidth="460px"
-    >
-      <div style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.15rem' }}>
-        <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
-          Make sure your phone is connected to the <strong>same Wi-Fi network</strong> as this laptop, then scan this QR code with your camera.
-        </p>
-
-        <div
-          style={{
-            padding: '0.875rem',
-            backgroundColor: '#ffffff',
-            borderRadius: 'var(--radius-md)',
-            border: '1px solid var(--border-strong)',
-            display: 'inline-block',
-            boxShadow: 'var(--shadow-card)',
-          }}
-        >
-          <img
-            src="/mobile-qr.png"
-            alt="Scan QR Code for Same Wi-Fi Mobile View"
-            style={{ width: '210px', height: '210px', display: 'block' }}
-          />
-        </div>
-
-        {/* Local Wi-Fi Network URL */}
-        <div style={{ width: '100%' }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.35rem' }}>
-            <span style={{ fontSize: '0.72rem', fontFamily: 'var(--font-mono)', color: 'var(--accent-blue)', fontWeight: 600, display: 'inline-flex', alignItems: 'center', gap: '0.3rem' }}>
-              <Globe size={13} /> LOCAL WI-FI NETWORK URL:
-            </span>
-            <span style={{ fontSize: '0.6875rem', color: 'var(--accent-blue)', backgroundColor: 'var(--accent-blue-subtle)', padding: '0.1rem 0.4rem', borderRadius: '4px', fontWeight: 600 }}>
-              SAME WI-FI
-            </span>
-          </div>
-
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              backgroundColor: 'var(--bg-subtle)',
-              border: '1px solid var(--border-subtle)',
-              borderRadius: 'var(--radius-sm)',
-              overflow: 'hidden',
-            }}
-          >
-            <input
-              type="text"
-              readOnly
-              value={localWifiUrl}
-              style={{
-                background: 'none',
-                border: 'none',
-                outline: 'none',
-                padding: '0.6rem 0.75rem',
-                fontFamily: 'var(--font-mono)',
-                fontSize: '0.8125rem',
-                color: 'var(--accent-blue)',
-                fontWeight: 600,
-                width: '100%',
-              }}
-            />
-            <button
-              type="button"
-              onClick={handleCopyLink}
-              className="btn btn-secondary btn-sm"
-              style={{
-                borderRadius: 0,
-                borderLeft: '1px solid var(--border-subtle)',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.35rem',
-                fontSize: '0.75rem',
-                flexShrink: 0,
-                height: '100%',
-                padding: '0 0.85rem',
-              }}
-            >
-              {copied ? (
-                <>
-                  <Check size={14} color="var(--accent-emerald)" />
-                  <span style={{ color: 'var(--accent-emerald)' }}>Copied!</span>
-                </>
-              ) : (
-                <>
-                  <Copy size={14} />
-                  <span>Copy</span>
-                </>
-              )}
-            </button>
-          </div>
-        </div>
-
-        {/* Info callout */}
-        <div
-          style={{
-            fontSize: '0.75rem',
-            color: 'var(--text-muted)',
-            lineHeight: 1.5,
-            backgroundColor: 'var(--bg-subtle)',
-            padding: '0.6rem 0.85rem',
-            borderRadius: 'var(--radius-sm)',
-            border: '1px solid var(--border-subtle)',
-            width: '100%',
-            textAlign: 'left',
-          }}
-        >
-          📶 <strong>Wi-Fi Requirement:</strong> Both your computer and phone must be on the same Wi-Fi router (192.168.0.x).
-        </div>
-      </div>
-    </Modal>
-
     {/* Admin Login Popup Modal */}
     <AdminLoginModal
       isOpen={adminModalOpen}
@@ -449,6 +352,13 @@ export const Navbar = ({ profile }) => {
           navigate(location.pathname, { replace: true });
         }
       }}
+    />
+
+    {/* Share Profile Modal */}
+    <ShareProfileModal
+      isOpen={shareModalOpen}
+      onClose={() => setShareModalOpen(false)}
+      profile={profile}
     />
   </>
   );

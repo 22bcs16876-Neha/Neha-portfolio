@@ -5,7 +5,7 @@
   <circle cx="24" cy="19" r="5" fill="#ef4444" />
   <circle cx="40" cy="19" r="5" fill="#f59e0b" />
   <circle cx="56" cy="19" r="5" fill="#10b981" />
-  <text x="80" y="24" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="12">https://amit-kumar.dev/admin/portal</text>
+  <text x="80" y="24" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="12">https://portfolio.dev/admin/portal</text>
   <rect x="510" y="9" width="105" height="20" rx="4" fill="#334155" />
   <text x="522" y="23" fill="#38bdf8" font-family="'JetBrains Mono', monospace" font-size="10">THEME: EDITORIAL</text>
 
@@ -15,7 +15,7 @@
   <!-- Top brand bar -->
   <rect x="25" y="55" width="280" height="36" rx="6" fill="#21262d" />
   <circle cx="45" cy="73" r="8" fill="#38bdf8" />
-  <text x="60" y="77" fill="#f0f6fc" font-family="'Inter', sans-serif" font-size="11" font-weight="700">Amit Kumar</text>
+  <text x="60" y="77" fill="#f0f6fc" font-family="'Inter', sans-serif" font-size="11" font-weight="700">Portfolio CMS</text>
 
 
   <!-- Quote & Bio preview -->

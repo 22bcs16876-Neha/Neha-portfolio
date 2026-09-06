@@ -3,6 +3,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { IconRenderer } from '../common/IconRenderer';
 
 export const Skills = ({ skills = [] }) => {
+  if (!skills || skills.length === 0) return null;
   const [activeCategory, setActiveCategory] = useState('ALL');
   const skillsScrollRef = useRef(null);
 

@@ -19,26 +19,23 @@ public class Profile {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "full_name", nullable = false, length = 100)
+    @Column(name = "full_name", length = 100)
     private String fullName;
 
-    @Column(nullable = false, length = 150)
+    @Column(length = 150)
     private String title;
 
     @Column(length = 255)
     private String tagline;
 
     @Column(name = "role_badge", length = 80)
-    @Builder.Default
-    private String roleBadge = "Software Engineer";
+    private String roleBadge;
 
     @Column(name = "status_text", length = 120)
-    @Builder.Default
-    private String statusText = "Open to Opportunities";
+    private String statusText;
 
     @Column(name = "hero_tech_stack", length = 300)
-    @Builder.Default
-    private String heroTechStack = "Java 21, Spring Boot 3, MySQL, Docker, React";
+    private String heroTechStack;
 
     @Lob
     @Column(columnDefinition = "TEXT")
@@ -79,137 +76,106 @@ public class Profile {
     private String leetcodeUrl;
 
     @Column(name = "years_of_experience")
-    @Builder.Default
-    private Integer yearsOfExperience = 4;
+    private Integer yearsOfExperience;
 
     @Column(name = "projects_count")
-    @Builder.Default
-    private Integer projectsCount = 14;
+    private Integer projectsCount;
 
     @Column(name = "problems_solved_count")
-    @Builder.Default
-    private Integer problemsSolvedCount = 500;
+    private Integer problemsSolvedCount;
 
     @Column(name = "technologies_count")
-    @Builder.Default
-    private Integer technologiesCount = 20;
+    private Integer technologiesCount;
 
     // Customizable Dynamic Quick Fact Metrics (any role can customize labels & values)
     @Column(name = "stat1_label", length = 80)
-    @Builder.Default
-    private String stat1Label = "Years Experience";
+    private String stat1Label;
 
     @Column(name = "stat1_value", length = 50)
-    @Builder.Default
-    private String stat1Value = "4+";
+    private String stat1Value;
 
     @Column(name = "stat2_label", length = 80)
-    @Builder.Default
-    private String stat2Label = "Projects Completed";
+    private String stat2Label;
 
     @Column(name = "stat2_value", length = 50)
-    @Builder.Default
-    private String stat2Value = "14+";
+    private String stat2Value;
 
     @Column(name = "stat3_label", length = 80)
-    @Builder.Default
-    private String stat3Label = "DSA Problems Solved";
+    private String stat3Label;
 
     @Column(name = "stat3_value", length = 50)
-    @Builder.Default
-    private String stat3Value = "500+";
+    private String stat3Value;
 
     @Column(name = "stat4_label", length = 80)
-    @Builder.Default
-    private String stat4Label = "Technologies Mastered";
+    private String stat4Label;
 
     @Column(name = "stat4_value", length = 50)
-    @Builder.Default
-    private String stat4Value = "20+";
+    private String stat4Value;
 
     @Column(name = "default_theme", length = 20)
-    @Builder.Default
-    private String defaultTheme = "light";
+    private String defaultTheme;
 
     // Hero Editorial Quote
     @Lob
     @Column(name = "hero_quote", columnDefinition = "TEXT")
-    @Builder.Default
-    private String heroQuote = "Dependable software is built on predictability, clean abstractions, and defensive engineering. Today, the most valuable systems are not the most complex — they are the most reliable.";
+    private String heroQuote;
 
     // Hero Triad Architecture Focus Cards
     @Column(name = "triad1_title", length = 100)
-    @Builder.Default
-    private String triad1Title = "Backend & Microservices";
+    private String triad1Title;
 
     @Column(name = "triad1_spec", length = 120)
-    @Builder.Default
-    private String triad1Spec = "Java 21 • Spring Boot 3";
+    private String triad1Spec;
 
     @Lob
     @Column(name = "triad1_desc", columnDefinition = "TEXT")
-    @Builder.Default
-    private String triad1Desc = "Engineering high-throughput REST APIs, stateless JWT security, distributed service communication, and robust error handling pipelines.";
+    private String triad1Desc;
 
     @Column(name = "triad2_title", length = 100)
-    @Builder.Default
-    private String triad2Title = "Data Systems & Modeling";
+    private String triad2Title;
 
     @Column(name = "triad2_spec", length = 120)
-    @Builder.Default
-    private String triad2Spec = "MySQL • PostgreSQL • JPA";
+    private String triad2Spec;
 
     @Lob
     @Column(name = "triad2_desc", columnDefinition = "TEXT")
-    @Builder.Default
-    private String triad2Desc = "Relational schema design, transactional boundary configuration, index optimization, query execution plan analysis, and data consistency.";
+    private String triad2Desc;
 
     @Column(name = "triad3_title", length = 100)
-    @Builder.Default
-    private String triad3Title = "Production Orchestration";
+    private String triad3Title;
 
     @Column(name = "triad3_spec", length = 120)
-    @Builder.Default
-    private String triad3Spec = "Docker • Linux • Compose";
+    private String triad3Spec;
 
     @Lob
     @Column(name = "triad3_desc", columnDefinition = "TEXT")
-    @Builder.Default
-    private String triad3Desc = "Multi-stage container builds, reproducible runtime configurations, container health probes, and defensive deployment practices.";
+    private String triad3Desc;
 
     // Developer's Corner - In-Focus Spotlight & Metrics
     @Column(name = "in_focus_title", length = 200)
-    @Builder.Default
-    private String inFocusTitle = "Enterprise Microservices Architecture & High-Throughput Engine";
+    private String inFocusTitle;
 
     @Lob
     @Column(name = "in_focus_description", columnDefinition = "TEXT")
-    @Builder.Default
-    private String inFocusDescription = "Designed and deployed a resilient microservices foundation with Java 21 and Spring Boot 3. Implements stateless JWT authentication, distributed transactional boundaries, asynchronous order processing, and defensive circuit breakers for high availability under heavy transactional load.";
+    private String inFocusDescription;
 
     @Column(name = "in_focus_metric1_value", length = 50)
-    @Builder.Default
-    private String inFocusMetric1Value = "99.9%";
+    private String inFocusMetric1Value;
 
     @Column(name = "in_focus_metric1_label", length = 80)
-    @Builder.Default
-    private String inFocusMetric1Label = "SLA Uptime";
+    private String inFocusMetric1Label;
 
     @Column(name = "in_focus_metric2_value", length = 50)
-    @Builder.Default
-    private String inFocusMetric2Value = "<85ms";
+    private String inFocusMetric2Value;
 
     @Column(name = "in_focus_metric2_label", length = 80)
-    @Builder.Default
-    private String inFocusMetric2Label = "P95 Latency";
+    private String inFocusMetric2Label;
 
     @Column(name = "in_focus_metric3_value", length = 50)
-    @Builder.Default
-    private String inFocusMetric3Value = "Zero";
+    private String inFocusMetric3Value;
 
     @Column(name = "in_focus_metric3_label", length = 80)
-    @Builder.Default
-    private String inFocusMetric3Label = "Session State";
+    private String inFocusMetric3Label;
 
     // Developer's Corner - 6 Core Competencies JSON or text
     @Lob
@@ -222,18 +188,15 @@ public class Profile {
     private String engineeringPrinciples;
 
     @Column(name = "about_location_line", length = 300)
-    @Builder.Default
-    private String aboutLocationLine = "Based in Bengaluru, India. Passionate about participating in open-source development, competitive programming, and continuous hands-on learning.";
+    private String aboutLocationLine;
 
     // Footer Engagement Banner
     @Column(name = "footer_heading", length = 200)
-    @Builder.Default
-    private String footerHeading = "Building resilient systems, one transaction at a time.";
+    private String footerHeading;
 
     @Lob
     @Column(name = "footer_subheading", columnDefinition = "TEXT")
-    @Builder.Default
-    private String footerSubheading = "Open to backend software engineering positions, microservices architecture challenges, and full-stack integration projects.";
+    private String footerSubheading;
 
     @UpdateTimestamp
     @Column(name = "updated_at")

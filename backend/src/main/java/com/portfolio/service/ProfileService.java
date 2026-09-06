@@ -19,10 +19,7 @@ public class ProfileService {
                 .orElse(null);
 
         if (profile == null) {
-            return ProfileDto.builder()
-                    .fullName("Software Engineer")
-                    .title("Full-Stack & Systems Developer")
-                    .build();
+            return null;
         }
 
         return toDto(profile);
@@ -33,67 +30,67 @@ public class ProfileService {
         Profile profile = profileRepository.findFirstByOrderByIdAsc()
                 .orElseGet(Profile::new);
 
-        profile.setFullName(dto.getFullName());
-        profile.setTitle(dto.getTitle());
-        profile.setTagline(dto.getTagline());
-        profile.setRoleBadge(dto.getRoleBadge());
-        profile.setStatusText(dto.getStatusText());
-        profile.setHeroTechStack(dto.getHeroTechStack());
-        profile.setBio(dto.getBio());
-        profile.setShortAbout(dto.getShortAbout());
-        profile.setFullAbout(dto.getFullAbout());
-        profile.setEmail(dto.getEmail());
-        profile.setPhone(dto.getPhone());
-        profile.setLocation(dto.getLocation());
-        profile.setAvatarUrl(dto.getAvatarUrl());
-        profile.setResumeUrl(dto.getResumeUrl());
-        profile.setGithubUrl(dto.getGithubUrl());
-        profile.setLinkedinUrl(dto.getLinkedinUrl());
-        profile.setLeetcodeUrl(dto.getLeetcodeUrl());
-        profile.setYearsOfExperience(dto.getYearsOfExperience());
-        profile.setProjectsCount(dto.getProjectsCount());
-        profile.setProblemsSolvedCount(dto.getProblemsSolvedCount());
-        profile.setTechnologiesCount(dto.getTechnologiesCount());
+        if (dto.getFullName() != null) profile.setFullName(dto.getFullName());
+        if (dto.getTitle() != null) profile.setTitle(dto.getTitle());
+        if (dto.getTagline() != null) profile.setTagline(dto.getTagline());
+        if (dto.getRoleBadge() != null) profile.setRoleBadge(dto.getRoleBadge());
+        if (dto.getStatusText() != null) profile.setStatusText(dto.getStatusText());
+        if (dto.getHeroTechStack() != null) profile.setHeroTechStack(dto.getHeroTechStack());
+        if (dto.getBio() != null) profile.setBio(dto.getBio());
+        if (dto.getShortAbout() != null) profile.setShortAbout(dto.getShortAbout());
+        if (dto.getFullAbout() != null) profile.setFullAbout(dto.getFullAbout());
+        if (dto.getEmail() != null) profile.setEmail(dto.getEmail());
+        if (dto.getPhone() != null) profile.setPhone(dto.getPhone());
+        if (dto.getLocation() != null) profile.setLocation(dto.getLocation());
+        if (dto.getAvatarUrl() != null) profile.setAvatarUrl(dto.getAvatarUrl());
+        if (dto.getResumeUrl() != null) profile.setResumeUrl(dto.getResumeUrl());
+        if (dto.getGithubUrl() != null) profile.setGithubUrl(dto.getGithubUrl());
+        if (dto.getLinkedinUrl() != null) profile.setLinkedinUrl(dto.getLinkedinUrl());
+        if (dto.getLeetcodeUrl() != null) profile.setLeetcodeUrl(dto.getLeetcodeUrl());
+        if (dto.getYearsOfExperience() != null) profile.setYearsOfExperience(dto.getYearsOfExperience());
+        if (dto.getProjectsCount() != null) profile.setProjectsCount(dto.getProjectsCount());
+        if (dto.getProblemsSolvedCount() != null) profile.setProblemsSolvedCount(dto.getProblemsSolvedCount());
+        if (dto.getTechnologiesCount() != null) profile.setTechnologiesCount(dto.getTechnologiesCount());
 
-        profile.setStat1Label(dto.getStat1Label());
-        profile.setStat1Value(dto.getStat1Value());
-        profile.setStat2Label(dto.getStat2Label());
-        profile.setStat2Value(dto.getStat2Value());
-        profile.setStat3Label(dto.getStat3Label());
-        profile.setStat3Value(dto.getStat3Value());
-        profile.setStat4Label(dto.getStat4Label());
-        profile.setStat4Value(dto.getStat4Value());
+        if (dto.getStat1Label() != null) profile.setStat1Label(dto.getStat1Label());
+        if (dto.getStat1Value() != null) profile.setStat1Value(dto.getStat1Value());
+        if (dto.getStat2Label() != null) profile.setStat2Label(dto.getStat2Label());
+        if (dto.getStat2Value() != null) profile.setStat2Value(dto.getStat2Value());
+        if (dto.getStat3Label() != null) profile.setStat3Label(dto.getStat3Label());
+        if (dto.getStat3Value() != null) profile.setStat3Value(dto.getStat3Value());
+        if (dto.getStat4Label() != null) profile.setStat4Label(dto.getStat4Label());
+        if (dto.getStat4Value() != null) profile.setStat4Value(dto.getStat4Value());
 
         // Hero Quote & Triad Cards
-        profile.setHeroQuote(dto.getHeroQuote());
-        profile.setTriad1Title(dto.getTriad1Title());
-        profile.setTriad1Spec(dto.getTriad1Spec());
-        profile.setTriad1Desc(dto.getTriad1Desc());
-        profile.setTriad2Title(dto.getTriad2Title());
-        profile.setTriad2Spec(dto.getTriad2Spec());
-        profile.setTriad2Desc(dto.getTriad2Desc());
-        profile.setTriad3Title(dto.getTriad3Title());
-        profile.setTriad3Spec(dto.getTriad3Spec());
-        profile.setTriad3Desc(dto.getTriad3Desc());
+        if (dto.getHeroQuote() != null) profile.setHeroQuote(dto.getHeroQuote());
+        if (dto.getTriad1Title() != null) profile.setTriad1Title(dto.getTriad1Title());
+        if (dto.getTriad1Spec() != null) profile.setTriad1Spec(dto.getTriad1Spec());
+        if (dto.getTriad1Desc() != null) profile.setTriad1Desc(dto.getTriad1Desc());
+        if (dto.getTriad2Title() != null) profile.setTriad2Title(dto.getTriad2Title());
+        if (dto.getTriad2Spec() != null) profile.setTriad2Spec(dto.getTriad2Spec());
+        if (dto.getTriad2Desc() != null) profile.setTriad2Desc(dto.getTriad2Desc());
+        if (dto.getTriad3Title() != null) profile.setTriad3Title(dto.getTriad3Title());
+        if (dto.getTriad3Spec() != null) profile.setTriad3Spec(dto.getTriad3Spec());
+        if (dto.getTriad3Desc() != null) profile.setTriad3Desc(dto.getTriad3Desc());
 
         // Developer's Corner In-Focus & Capabilities
-        profile.setInFocusTitle(dto.getInFocusTitle());
-        profile.setInFocusDescription(dto.getInFocusDescription());
-        profile.setInFocusMetric1Value(dto.getInFocusMetric1Value());
-        profile.setInFocusMetric1Label(dto.getInFocusMetric1Label());
-        profile.setInFocusMetric2Value(dto.getInFocusMetric2Value());
-        profile.setInFocusMetric2Label(dto.getInFocusMetric2Label());
-        profile.setInFocusMetric3Value(dto.getInFocusMetric3Value());
-        profile.setInFocusMetric3Label(dto.getInFocusMetric3Label());
-        profile.setDevCornerCapabilities(dto.getDevCornerCapabilities());
+        if (dto.getInFocusTitle() != null) profile.setInFocusTitle(dto.getInFocusTitle());
+        if (dto.getInFocusDescription() != null) profile.setInFocusDescription(dto.getInFocusDescription());
+        if (dto.getInFocusMetric1Value() != null) profile.setInFocusMetric1Value(dto.getInFocusMetric1Value());
+        if (dto.getInFocusMetric1Label() != null) profile.setInFocusMetric1Label(dto.getInFocusMetric1Label());
+        if (dto.getInFocusMetric2Value() != null) profile.setInFocusMetric2Value(dto.getInFocusMetric2Value());
+        if (dto.getInFocusMetric2Label() != null) profile.setInFocusMetric2Label(dto.getInFocusMetric2Label());
+        if (dto.getInFocusMetric3Value() != null) profile.setInFocusMetric3Value(dto.getInFocusMetric3Value());
+        if (dto.getInFocusMetric3Label() != null) profile.setInFocusMetric3Label(dto.getInFocusMetric3Label());
+        if (dto.getDevCornerCapabilities() != null) profile.setDevCornerCapabilities(dto.getDevCornerCapabilities());
 
         // About Principles & Location
-        profile.setEngineeringPrinciples(dto.getEngineeringPrinciples());
-        profile.setAboutLocationLine(dto.getAboutLocationLine());
+        if (dto.getEngineeringPrinciples() != null) profile.setEngineeringPrinciples(dto.getEngineeringPrinciples());
+        if (dto.getAboutLocationLine() != null) profile.setAboutLocationLine(dto.getAboutLocationLine());
 
         // Footer Banner
-        profile.setFooterHeading(dto.getFooterHeading());
-        profile.setFooterSubheading(dto.getFooterSubheading());
+        if (dto.getFooterHeading() != null) profile.setFooterHeading(dto.getFooterHeading());
+        if (dto.getFooterSubheading() != null) profile.setFooterSubheading(dto.getFooterSubheading());
 
         if (dto.getDefaultTheme() != null && !dto.getDefaultTheme().isBlank()) {
             String sanitized = ("dark".equalsIgnoreCase(dto.getDefaultTheme()) || "black".equalsIgnoreCase(dto.getDefaultTheme())) ? "dark" : "light";

@@ -17,7 +17,6 @@ import { Contact } from '../components/sections/Contact';
 import { Loader2, RefreshCw, WifiOff, AlertCircle, Sparkles, ArrowRight } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import { updateTabBranding } from '../utils/favicon';
-import { DEFAULT_PORTFOLIO_DATA } from '../utils/defaultData';
 
 export const Home = () => {
   const { applyPortalDefault } = useTheme();
@@ -25,7 +24,12 @@ export const Home = () => {
   const getInitialData = () => {
     try {
       const cached = localStorage.getItem('portfolio_cached_data');
-      if (cached) return JSON.parse(cached);
+      if (cached) {
+        const parsed = JSON.parse(cached);
+        if (parsed && typeof parsed === 'object') {
+          return parsed;
+        }
+      }
     } catch {}
     return {
       profile: null,
@@ -40,7 +44,7 @@ export const Home = () => {
   };
 
   const [data, setData] = useState(getInitialData);
-  const [loading, setLoading] = useState(!data.profile);
+  const [loading, setLoading] = useState(!data?.profile?.fullName);
   const [isSyncing, setIsSyncing] = useState(false);
   const [error, setError] = useState(null);
   const [elapsed, setElapsed] = useState(0);
@@ -89,11 +93,12 @@ export const Home = () => {
   }, [loading, isOffline, error]);
 
   const loadOfflineSnapshot = useCallback(() => {
-    setData(DEFAULT_PORTFOLIO_DATA);
-    if (DEFAULT_PORTFOLIO_DATA.profile) {
-      updateTabBranding(DEFAULT_PORTFOLIO_DATA.profile);
-      if (DEFAULT_PORTFOLIO_DATA.profile.defaultTheme) {
-        applyPortalDefault(DEFAULT_PORTFOLIO_DATA.profile.defaultTheme);
+    const initial = getInitialData();
+    setData(initial);
+    if (initial.profile) {
+      updateTabBranding(initial.profile);
+      if (initial.profile.defaultTheme) {
+        applyPortalDefault(initial.profile.defaultTheme);
       }
     }
     setLoading(false);
@@ -143,14 +148,14 @@ export const Home = () => {
       }
 
       const freshData = {
-        profile: profile || data.profile || DEFAULT_PORTFOLIO_DATA.profile,
-        skills: (skills && skills.length > 0) ? skills : (data.skills?.length ? data.skills : DEFAULT_PORTFOLIO_DATA.skills),
-        experience: (experience && experience.length > 0) ? experience : (data.experience?.length ? data.experience : DEFAULT_PORTFOLIO_DATA.experience),
-        projects: (projects && projects.length > 0) ? projects : (data.projects?.length ? data.projects : DEFAULT_PORTFOLIO_DATA.projects),
-        education: (education && education.length > 0) ? education : (data.education?.length ? data.education : DEFAULT_PORTFOLIO_DATA.education),
-        certifications: (certifications && certifications.length > 0) ? certifications : (data.certifications?.length ? data.certifications : DEFAULT_PORTFOLIO_DATA.certifications),
-        achievements: (achievements && achievements.length > 0) ? achievements : (data.achievements?.length ? data.achievements : DEFAULT_PORTFOLIO_DATA.achievements),
-        codingProfiles: (codingProfiles && codingProfiles.length > 0) ? codingProfiles : (data.codingProfiles?.length ? data.codingProfiles : DEFAULT_PORTFOLIO_DATA.codingProfiles),
+        profile: profile || data.profile || null,
+        skills: Array.isArray(skills) ? skills : [],
+        experience: Array.isArray(experience) ? experience : [],
+        projects: Array.isArray(projects) ? projects : [],
+        education: Array.isArray(education) ? education : [],
+        certifications: Array.isArray(certifications) ? certifications : [],
+        achievements: Array.isArray(achievements) ? achievements : [],
+        codingProfiles: Array.isArray(codingProfiles) ? codingProfiles : [],
       };
 
       setData(freshData);

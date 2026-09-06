@@ -1,52 +1,33 @@
 package com.portfolio.service;
 
+import com.portfolio.entity.StoredFile;
 import com.portfolio.exception.BadRequestException;
+import com.portfolio.repository.StoredFileRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class FileStorageService {
 
-    private final Path fileStorageLocation;
+    private final StoredFileRepository storedFileRepository;
 
     private static final List<String> ALLOWED_EXTENSIONS = Arrays.asList(
             "jpg", "jpeg", "png", "webp", "gif", "svg", "pdf"
     );
 
-    public FileStorageService(@Value("${upload.dir:./uploads}") String uploadDir) {
-        Path targetPath;
-        try {
-            targetPath = Paths.get(uploadDir).toAbsolutePath().normalize();
-            Files.createDirectories(targetPath);
-            log.info("File upload storage directory initialized at: {}", targetPath);
-        } catch (Exception ex) {
-            log.warn("Could not create upload directory '{}': {}. Falling back to system temp directory.", uploadDir, ex.getMessage());
-            try {
-                targetPath = Paths.get(System.getProperty("java.io.tmpdir"), "uploads").toAbsolutePath().normalize();
-                Files.createDirectories(targetPath);
-                log.info("Fallback upload directory initialized at: {}", targetPath);
-            } catch (Exception tempEx) {
-                targetPath = Paths.get(".").toAbsolutePath().normalize();
-                log.error("Could not create temp directory either: {}", tempEx.getMessage());
-            }
-        }
-        this.fileStorageLocation = targetPath;
-    }
-
+    @Transactional
     public String storeFile(MultipartFile file) {
         if (file.isEmpty()) {
             throw new BadRequestException("Failed to store empty file.");
@@ -56,12 +37,10 @@ public class FileStorageService {
                 file.getOriginalFilename() != null ? file.getOriginalFilename() : "file"
         );
 
-        // Security check: reject paths with directory traversal
         if (originalFilename.contains("..")) {
             throw new BadRequestException("Filename contains invalid path sequence: " + originalFilename);
         }
 
-        // Validate extension
         String extension = "";
         int i = originalFilename.lastIndexOf('.');
         if (i > 0) {
@@ -72,24 +51,50 @@ public class FileStorageService {
             throw new BadRequestException("File type '." + extension + "' is not permitted. Allowed: " + String.join(", ", ALLOWED_EXTENSIONS));
         }
 
-        // Generate safe unique filename
-        String safeName = originalFilename.substring(0, i).replaceAll("[^a-zA-Z0-9_-]", "_");
+        String safeName = (i > 0 ? originalFilename.substring(0, i) : originalFilename).replaceAll("[^a-zA-Z0-9_-]", "_");
         if (safeName.length() > 30) {
             safeName = safeName.substring(0, 30);
         }
         String uniqueFilename = safeName + "-" + UUID.randomUUID().toString().substring(0, 8) + "." + extension;
 
         try {
-            Path targetLocation = this.fileStorageLocation.resolve(uniqueFilename);
-            try (InputStream inputStream = file.getInputStream()) {
-                Files.copy(inputStream, targetLocation, StandardCopyOption.REPLACE_EXISTING);
+            byte[] fileBytes = file.getBytes();
+            String contentType = file.getContentType();
+            if (contentType == null || contentType.isBlank()) {
+                contentType = probeContentType(uniqueFilename);
             }
 
-            log.info("Successfully stored uploaded file: {}", uniqueFilename);
+            // Save directly into Aiven MySQL database - zero files stored on Render hard disk
+            StoredFile storedFile = StoredFile.builder()
+                    .filename(uniqueFilename)
+                    .originalName(originalFilename)
+                    .contentType(contentType)
+                    .fileSize((long) fileBytes.length)
+                    .data(fileBytes)
+                    .build();
+            storedFileRepository.save(storedFile);
+            log.info("Successfully saved file '{}' directly into Aiven MySQL database ({} bytes)", uniqueFilename, fileBytes.length);
+
             return "/uploads/" + uniqueFilename;
         } catch (IOException ex) {
             log.error("Could not store file {}: {}", uniqueFilename, ex.getMessage());
             throw new RuntimeException("Could not store file " + uniqueFilename + ". Please try again!", ex);
         }
+    }
+
+    @Transactional(readOnly = true)
+    public Optional<StoredFile> getStoredFile(String filename) {
+        return storedFileRepository.findByFilename(filename);
+    }
+
+    public static String probeContentType(String filename) {
+        String lower = filename.toLowerCase();
+        if (lower.endsWith(".png")) return "image/png";
+        if (lower.endsWith(".jpg") || lower.endsWith(".jpeg")) return "image/jpeg";
+        if (lower.endsWith(".webp")) return "image/webp";
+        if (lower.endsWith(".gif")) return "image/gif";
+        if (lower.endsWith(".svg")) return "image/svg+xml";
+        if (lower.endsWith(".pdf")) return "application/pdf";
+        return "application/octet-stream";
     }
 }

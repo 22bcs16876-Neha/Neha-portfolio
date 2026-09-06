@@ -43,10 +43,10 @@ public class AuthService {
     @Value("${emailjs.public-key:}")
     private String emailJsPublicKey;
 
-    @Value("${admin.default-email:amitkr9523da@gmail.com}")
+    @Value("${admin.default-email:${ADMIN_EMAIL:}}")
     private String defaultAdminEmail;
 
-    @Value("${admin.default-username:admin}")
+    @Value("${admin.default-username:${ADMIN_USERNAME:}}")
     private String defaultAdminUsername;
 
     @Transactional(readOnly = true)
@@ -113,10 +113,11 @@ public class AuthService {
 
         String name = profileRepository.findAll().stream().findFirst()
                 .map(Profile::getFullName)
-                .orElse("Neha");
+                .filter(n -> n != null && !n.isBlank())
+                .orElse("Admin");
         String role = profileRepository.findAll().stream().findFirst()
-                .map(p -> p.getRoleBadge() != null ? p.getRoleBadge() : "AI Engineer")
-                .orElse("AI Engineer");
+                .map(p -> p.getRoleBadge() != null && !p.getRoleBadge().isBlank() ? p.getRoleBadge() : "Software Engineer")
+                .orElse("Software Engineer");
 
         String svcId = (user.getEmailjsServiceId() != null && !user.getEmailjsServiceId().isBlank())
                 ? user.getEmailjsServiceId() : emailJsServiceId;

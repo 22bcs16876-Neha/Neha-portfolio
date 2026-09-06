@@ -2,6 +2,8 @@ import React from 'react';
 import { GraduationCap, Calendar, Award } from 'lucide-react';
 
 export const Education = ({ educations = [] }) => {
+  if (!educations || educations.length === 0) return null;
+
   return (
     <section id="education" className="section-padding" style={{ borderBottom: '1px solid var(--border-subtle)' }}>
       <div className="container">

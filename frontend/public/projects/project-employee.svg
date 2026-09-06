@@ -43,7 +43,7 @@
 
   <!-- Row 1 -->
   <line x1="150" y1="162" x2="620" y2="162" stroke="#334155" stroke-width="1" />
-  <text x="170" y="185" fill="#f8fafc" font-family="'Inter', sans-serif" font-size="11">EMP-0842 Amit K.</text>
+  <text x="170" y="185" fill="#f8fafc" font-family="'Inter', sans-serif" font-size="11">EMP-0842 Alex K.</text>
   <text x="290" y="185" fill="#94a3b8" font-family="'Inter', sans-serif" font-size="11">Core Engineering</text>
   <text x="420" y="185" fill="#38bdf8" font-family="'JetBrains Mono', monospace" font-size="10">SR_DEV</text>
   <rect x="520" y="173" width="60" height="18" rx="3" fill="#064e3b" />

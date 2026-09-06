@@ -19,10 +19,10 @@ services:
       - key: JWT_SECRET
         generateValue: true
       - key: ADMIN_USERNAME
-        value: admin
+        sync: false
       - key: ADMIN_PASSWORD
-        value: Admin@12345
+        generateValue: true
       - key: ADMIN_EMAIL
-        value: amitkr9523da@gmail.com
+        sync: false
       - key: CORS_ALLOWED_ORIGINS
         value: "*"

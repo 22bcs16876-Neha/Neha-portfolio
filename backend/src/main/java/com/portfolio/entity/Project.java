@@ -53,7 +53,8 @@ public class Project {
     @Column(name = "live_url", length = 300)
     private String liveUrl;
 
-    @Column(name = "image_url", length = 500)
+    @Lob
+    @Column(name = "image_url", columnDefinition = "LONGTEXT")
     private String imageUrl;
 
     @Column(name = "is_featured")

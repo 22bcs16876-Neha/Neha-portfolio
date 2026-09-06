@@ -117,7 +117,7 @@ export const AdminLayout = () => {
             {user?.username || 'Admin'}
           </div>
           <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>
-            {user?.email || 'admin@example.com'}
+            {user?.email || ''}
           </div>
         </div>
 

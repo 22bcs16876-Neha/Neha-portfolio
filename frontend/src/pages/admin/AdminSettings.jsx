@@ -218,7 +218,7 @@ export const AdminSettings = () => {
               </button>
             </div>
             <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', display: 'block', marginTop: '0.375rem' }}>
-              Currently active: <strong style={{ color: 'var(--text-primary)' }}>{accountData?.email || 'amitkr9523da@gmail.com'}</strong>
+              Currently active: <strong style={{ color: 'var(--text-primary)' }}>{accountData?.email || '—'}</strong>
             </span>
           </div>
         </form>

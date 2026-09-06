@@ -32,7 +32,7 @@ public class SecurityConfig {
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return web -> web.ignoring().requestMatchers("/uploads/**", "/favicon.ico", "/error");
+        return web -> web.ignoring().requestMatchers("/uploads/**", "/api/uploads/**", "/favicon.ico", "/error");
     }
 
     @Bean
@@ -81,7 +81,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/certifications/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/achievements/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/coding-profiles/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/uploads/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/status").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/uploads/**", "/api/uploads/**").permitAll()
 
                         // Public Contact Form Submission
                         .requestMatchers(HttpMethod.POST, "/api/contact").permitAll()

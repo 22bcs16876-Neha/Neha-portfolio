@@ -3,6 +3,19 @@
   command = "npm run build"
   publish = "dist"
 
+# Netlify Proxy Redirects for Backend API & Uploaded Media
+[[redirects]]
+  from = "/api/*"
+  to = "https://portfolio-backend-6qfo.onrender.com/api/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/uploads/*"
+  to = "https://portfolio-backend-6qfo.onrender.com/uploads/:splat"
+  status = 200
+  force = true
+
 # Redirect all requests to index.html for React Router SPA routing
 [[redirects]]
   from = "/*"

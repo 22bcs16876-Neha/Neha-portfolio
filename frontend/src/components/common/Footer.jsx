@@ -1,8 +1,10 @@
-import React from 'react';
-import { ArrowUp, Github, Linkedin, Mail, Code, ArrowRight, MapPin, Clock, FileText, CheckCircle2, ShieldCheck, Terminal } from 'lucide-react';
+import React, { useState } from 'react';
+import { ArrowUp, Github, Linkedin, Mail, Code, ArrowRight, MapPin, Clock, FileText, CheckCircle2, ShieldCheck, Terminal, Share2 } from 'lucide-react';
 import { resolveAssetUrl } from '../../utils/assets';
+import { ShareProfileModal } from './ShareProfileModal';
 
 export const Footer = ({ profile }) => {
+  const [shareModalOpen, setShareModalOpen] = useState(false);
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -14,9 +16,9 @@ export const Footer = ({ profile }) => {
 
   const currentYear = new Date().getFullYear();
   const name = profile?.fullName || '';
-  const role = profile?.title || 'Software Engineer';
+  const role = profile?.title || '';
   const location = profile?.location || '';
-  const roleBadge = profile?.roleBadge || 'Software Engineer';
+  const roleBadge = profile?.roleBadge || '';
   const avatarImage = resolveAssetUrl(profile?.avatarUrl) || '/default-avatar.svg';
 
   const navLinks = [
@@ -29,14 +31,9 @@ export const Footer = ({ profile }) => {
     { label: 'Direct Communication', href: 'contact' },
   ];
 
-  const focusDomains = [
-    'Conversational Agents & Multi-Turn State',
-    'Enterprise RAG & Hybrid Vector Retrieval',
-    'Sub-500ms Streaming WebSocket Serving',
-    'NeMo Guardrails & Prompt Injection Defense',
-    'Intent Classification & Slot Filling (NLU)',
-    'LLMOps, Ragas Evaluation & Observability',
-  ];
+  const focusDomains = profile?.heroTechStack
+    ? profile.heroTechStack.split(',').map((t) => t.trim()).filter(Boolean).slice(0, 6)
+    : [];
 
   return (
     <footer
@@ -80,22 +77,26 @@ export const Footer = ({ profile }) => {
             >
               Engineering Collaboration
             </span>
-            <h3
-              className="font-serif"
-              style={{
-                fontSize: 'clamp(1.25rem, 2.2vw, 1.6rem)',
-                fontWeight: 600,
-                color: 'var(--text-primary)',
-                marginTop: '0.25rem',
-                marginBottom: '0.5rem',
-                letterSpacing: '-0.02em',
-              }}
-            >
-              {profile?.footerHeading || 'Building resilient systems, one transaction at a time.'}
-            </h3>
-            <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', lineHeight: 1.6 }}>
-              {profile?.footerSubheading || 'Open to backend software engineering positions, microservices architecture challenges, and full-stack integration projects.'}
-            </p>
+            {profile?.footerHeading && (
+              <h3
+                className="font-serif"
+                style={{
+                  fontSize: 'clamp(1.25rem, 2.2vw, 1.6rem)',
+                  fontWeight: 600,
+                  color: 'var(--text-primary)',
+                  marginTop: '0.25rem',
+                  marginBottom: '0.5rem',
+                  letterSpacing: '-0.02em',
+                }}
+              >
+                {profile.footerHeading}
+              </h3>
+            )}
+            {profile?.footerSubheading && (
+              <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', lineHeight: 1.6 }}>
+                {profile.footerSubheading}
+              </p>
+            )}
           </div>
 
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.875rem', alignItems: 'center' }}>
@@ -120,6 +121,17 @@ export const Footer = ({ profile }) => {
                 <span>Download CV</span>
               </a>
             )}
+
+            <button
+              type="button"
+              onClick={() => setShareModalOpen(true)}
+              className="btn btn-secondary"
+              style={{ minHeight: '44px', padding: '0 1.25rem', display: 'inline-flex', alignItems: 'center', gap: '0.45rem' }}
+              title="Share Profile"
+            >
+              <Share2 size={15} />
+              <span>Share Profile</span>
+            </button>
           </div>
         </div>
 
@@ -148,35 +160,37 @@ export const Footer = ({ profile }) => {
                   <span style={{ fontWeight: 700, fontSize: '1.125rem', color: 'var(--text-primary)', letterSpacing: '-0.015em' }}>
                     {name}
                   </span>
-                  <span
-                    className="badge badge-blue"
-                    style={{ fontSize: '0.6875rem', padding: '0.1rem 0.45rem' }}
-                  >
-                    {roleBadge}
-                  </span>
+                  {roleBadge && (
+                    <span
+                      className="badge badge-blue"
+                      style={{ fontSize: '0.6875rem', padding: '0.1rem 0.45rem' }}
+                    >
+                      {roleBadge}
+                    </span>
+                  )}
                 </div>
-                <div style={{ fontSize: '0.8125rem', color: 'var(--text-secondary)', marginTop: '0.15rem' }}>
-                  {role}
-                </div>
+                {role && (
+                  <div style={{ fontSize: '0.8125rem', color: 'var(--text-secondary)', marginTop: '0.15rem' }}>
+                    {role}
+                  </div>
+                )}
               </div>
             </div>
 
-            <p style={{ fontSize: '0.84375rem', lineHeight: 1.65, color: 'var(--text-secondary)' }}>
-              {profile?.bio ||
-                'Backend-focused software developer based in Bengaluru. Designing robust APIs with Java 21 and Spring Boot, optimizing SQL workloads, and shipping reliable web applications.'}
-            </p>
+            {profile?.bio && (
+              <p style={{ fontSize: '0.84375rem', lineHeight: 1.65, color: 'var(--text-secondary)' }}>
+                {profile.bio}
+              </p>
+            )}
 
-            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', fontSize: '0.75rem', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>
-              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}>
-                <MapPin size={13} color="var(--text-muted)" />
-                {location}
-              </span>
-              <span>•</span>
-              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}>
-                <Clock size={13} color="var(--text-muted)" />
-                UTC+5:30 (IST)
-              </span>
-            </div>
+            {location && (
+              <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', fontSize: '0.75rem', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>
+                <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}>
+                  <MapPin size={13} color="var(--text-muted)" />
+                  {location}
+                </span>
+              </div>
+            )}
 
             {/* Social Icons */}
             <div style={{ display: 'flex', gap: '0.625rem', marginTop: '0.5rem' }}>
@@ -279,41 +293,43 @@ export const Footer = ({ profile }) => {
           </div>
 
           {/* Column 3: Focus Domains */}
-          <div>
-            <h4
-              style={{
-                fontSize: '0.75rem',
-                textTransform: 'uppercase',
-                letterSpacing: '0.08em',
-                color: 'var(--text-muted)',
-                marginBottom: '1.25rem',
-                fontFamily: 'var(--font-mono)',
-                fontWeight: 600,
-              }}
-            >
-              Architecture Domains
-            </h4>
-            <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.625rem', padding: 0, margin: 0 }}>
-              {focusDomains.map((dom, i) => (
-                <li
-                  key={i}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'flex-start',
-                    gap: '0.5rem',
-                    fontSize: '0.8125rem',
-                    color: 'var(--text-secondary)',
-                    lineHeight: 1.45,
-                  }}
-                >
-                  <span style={{ color: 'var(--accent-emerald)', fontSize: '0.8125rem', lineHeight: 1 }}>
-                    ✓
-                  </span>
-                  <span>{dom}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
+          {focusDomains.length > 0 && (
+            <div>
+              <h4
+                style={{
+                  fontSize: '0.75rem',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.08em',
+                  color: 'var(--text-muted)',
+                  marginBottom: '1.25rem',
+                  fontFamily: 'var(--font-mono)',
+                  fontWeight: 600,
+                }}
+              >
+                Architecture Domains
+              </h4>
+              <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.625rem', padding: 0, margin: 0 }}>
+                {focusDomains.map((dom, i) => (
+                  <li
+                    key={i}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'flex-start',
+                      gap: '0.5rem',
+                      fontSize: '0.8125rem',
+                      color: 'var(--text-secondary)',
+                      lineHeight: 1.45,
+                    }}
+                  >
+                    <span style={{ color: 'var(--accent-emerald)', fontSize: '0.8125rem', lineHeight: 1 }}>
+                      ✓
+                    </span>
+                    <span>{dom}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
 
           {/* Column 4: System Specifications */}
           <div>
@@ -331,28 +347,31 @@ export const Footer = ({ profile }) => {
               System Colophon
             </h4>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.875rem', fontSize: '0.8125rem', color: 'var(--text-secondary)' }}>
-              <div
-                style={{
-                  padding: '0.75rem 0.875rem',
-                  backgroundColor: 'var(--bg-subtle)',
-                  border: '1px solid var(--border-subtle)',
-                  borderRadius: '6px',
-                }}
-              >
-                <div style={{ fontSize: '0.6875rem', fontFamily: 'var(--font-mono)', color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '0.25rem' }}>
-                  OPERATIONAL STATUS
+              {profile?.statusText && (
+                <div
+                  style={{
+                    padding: '0.75rem 0.875rem',
+                    backgroundColor: 'var(--bg-subtle)',
+                    border: '1px solid var(--border-subtle)',
+                    borderRadius: '6px',
+                  }}
+                >
+                  <div style={{ fontSize: '0.6875rem', fontFamily: 'var(--font-mono)', color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '0.25rem' }}>
+                    OPERATIONAL STATUS
+                  </div>
+                  <div style={{ color: 'var(--accent-emerald)', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.45rem' }}>
+                    <span style={{ width: '7px', height: '7px', borderRadius: '50%', backgroundColor: 'var(--accent-emerald)' }} />
+                    <span>{profile.statusText}</span>
+                  </div>
                 </div>
-                <div style={{ color: 'var(--accent-emerald)', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.45rem' }}>
-                  <span style={{ width: '7px', height: '7px', borderRadius: '50%', backgroundColor: 'var(--accent-emerald)' }} />
-                  <span>{profile?.statusText || 'Open to Opportunities'}</span>
-                </div>
-              </div>
+              )}
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem', lineHeight: 1.6 }}>
-                <div><strong>Stack:</strong> {profile?.heroTechStack || 'Python 3.11, LangChain, LlamaIndex, OpenAI, Pinecone, FastAPI, Docker'}</div>
-                <div><strong>Standard:</strong> Strict Zero Gradients Editorial</div>
-                <div><strong>Availability:</strong> 99.9% Production SLA Target</div>
-                <div><strong>Typography:</strong> Inter & JetBrains Mono</div>
+                {profile?.heroTechStack && <div><strong>Stack:</strong> {profile.heroTechStack}</div>}
+                {profile?.stat4Label && profile?.stat4Value && (
+                  <div><strong>{profile.stat4Label}:</strong> {profile.stat4Value}</div>
+                )}
+                <div><strong>Standard:</strong> Verified Technical Records</div>
               </div>
             </div>
           </div>
@@ -374,7 +393,7 @@ export const Footer = ({ profile }) => {
           }}
         >
           <div>
-            © {currentYear} <strong>{name}</strong>. Certified technical records & architecture specifications.
+            © {currentYear} <strong>{name || 'Portfolio'}</strong>. Certified technical records & architecture specifications.
           </div>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
@@ -397,7 +416,7 @@ export const Footer = ({ profile }) => {
       <style>{`
         .footer-grid {
           display: grid;
-          grid-template-columns: 1.5fr 1fr 1.2fr 1.2fr;
+          grid-template-columns: ${focusDomains.length > 0 ? '1.5fr 1fr 1.2fr 1.2fr' : '1.5fr 1fr 1.2fr'};
           gap: 2.5rem;
           align-items: start;
           width: 100%;
@@ -422,6 +441,13 @@ export const Footer = ({ profile }) => {
           }
         }
       `}</style>
+
+      {/* Share Profile Modal */}
+      <ShareProfileModal
+        isOpen={shareModalOpen}
+        onClose={() => setShareModalOpen(false)}
+        profile={profile}
+      />
     </footer>
   );
 };

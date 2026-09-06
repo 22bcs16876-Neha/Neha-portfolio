@@ -12,9 +12,9 @@ export const AdminProfile = () => {
     fullName: '',
     title: '',
     tagline: '',
-    roleBadge: 'Software Engineer',
-    statusText: 'Open to Opportunities',
-    heroTechStack: 'Java 21, Spring Boot 3, MySQL, Docker, React',
+    roleBadge: '',
+    statusText: '',
+    heroTechStack: '',
     bio: '',
     shortAbout: '',
     fullAbout: '',
@@ -26,41 +26,41 @@ export const AdminProfile = () => {
     githubUrl: '',
     linkedinUrl: '',
     leetcodeUrl: '',
-    yearsOfExperience: 4,
-    projectsCount: 14,
-    problemsSolvedCount: 500,
-    technologiesCount: 20,
-    stat1Label: 'Years Experience',
-    stat1Value: '4+',
-    stat2Label: 'Projects Completed',
-    stat2Value: '14+',
-    stat3Label: 'DSA Problems Solved',
-    stat3Value: '500+',
-    stat4Label: 'Technologies Mastered',
-    stat4Value: '20+',
-    defaultTheme: 'light',
+    yearsOfExperience: 0,
+    projectsCount: 0,
+    problemsSolvedCount: 0,
+    technologiesCount: 0,
+    stat1Label: '',
+    stat1Value: '',
+    stat2Label: '',
+    stat2Value: '',
+    stat3Label: '',
+    stat3Value: '',
+    stat4Label: '',
+    stat4Value: '',
+    defaultTheme: 'dark',
 
     // Hero Quote & Triad Focus Cards
     heroQuote: '',
-    triad1Title: 'Backend & Microservices',
-    triad1Spec: 'Java 21 • Spring Boot 3',
+    triad1Title: '',
+    triad1Spec: '',
     triad1Desc: '',
-    triad2Title: 'Data Systems & Modeling',
-    triad2Spec: 'MySQL • PostgreSQL • JPA',
+    triad2Title: '',
+    triad2Spec: '',
     triad2Desc: '',
-    triad3Title: 'Production Orchestration',
-    triad3Spec: 'Docker • Linux • Compose',
+    triad3Title: '',
+    triad3Spec: '',
     triad3Desc: '',
 
     // Developer's Corner In-Focus Spotlight & Metrics
     inFocusTitle: '',
     inFocusDescription: '',
-    inFocusMetric1Value: '99.9%',
-    inFocusMetric1Label: 'SLA Uptime',
-    inFocusMetric2Value: '<85ms',
-    inFocusMetric2Label: 'P95 Latency',
-    inFocusMetric3Value: 'Zero',
-    inFocusMetric3Label: 'Session State',
+    inFocusMetric1Value: '',
+    inFocusMetric1Label: '',
+    inFocusMetric2Value: '',
+    inFocusMetric2Label: '',
+    inFocusMetric3Value: '',
+    inFocusMetric3Label: '',
     devCornerCapabilities: '',
 
     // About Principles & Location
@@ -90,9 +90,9 @@ export const AdminProfile = () => {
             fullName: data.fullName || '',
             title: data.title || '',
             tagline: data.tagline || '',
-            roleBadge: data.roleBadge || 'Software Engineer',
-            statusText: data.statusText || 'Open to Opportunities',
-            heroTechStack: data.heroTechStack || 'Java 21, Spring Boot 3, MySQL, Docker, React',
+            roleBadge: data.roleBadge || '',
+            statusText: data.statusText || '',
+            heroTechStack: data.heroTechStack || '',
             bio: data.bio || '',
             shortAbout: data.shortAbout || '',
             fullAbout: data.fullAbout || '',
@@ -104,39 +104,39 @@ export const AdminProfile = () => {
             githubUrl: data.githubUrl || '',
             linkedinUrl: data.linkedinUrl || '',
             leetcodeUrl: data.leetcodeUrl || '',
-            yearsOfExperience: data.yearsOfExperience ?? 4,
-            projectsCount: data.projectsCount ?? 14,
-            problemsSolvedCount: data.problemsSolvedCount ?? 500,
-            technologiesCount: data.technologiesCount ?? 20,
-            stat1Label: data.stat1Label || 'Years Experience',
-            stat1Value: data.stat1Value || `${data.yearsOfExperience ?? 4}+`,
-            stat2Label: data.stat2Label || 'Projects Completed',
-            stat2Value: data.stat2Value || `${data.projectsCount ?? 14}+`,
-            stat3Label: data.stat3Label || 'DSA Problems Solved',
-            stat3Value: data.stat3Value || `${data.problemsSolvedCount ?? 500}+`,
-            stat4Label: data.stat4Label || 'Technologies Mastered',
-            stat4Value: data.stat4Value || `${data.technologiesCount ?? 20}+`,
-            defaultTheme: data.defaultTheme || 'light',
+            yearsOfExperience: data.yearsOfExperience ?? 0,
+            projectsCount: data.projectsCount ?? 0,
+            problemsSolvedCount: data.problemsSolvedCount ?? 0,
+            technologiesCount: data.technologiesCount ?? 0,
+            stat1Label: data.stat1Label || '',
+            stat1Value: data.stat1Value || '',
+            stat2Label: data.stat2Label || '',
+            stat2Value: data.stat2Value || '',
+            stat3Label: data.stat3Label || '',
+            stat3Value: data.stat3Value || '',
+            stat4Label: data.stat4Label || '',
+            stat4Value: data.stat4Value || '',
+            defaultTheme: data.defaultTheme || 'dark',
 
             heroQuote: data.heroQuote || '',
-            triad1Title: data.triad1Title || 'Backend & Microservices',
-            triad1Spec: data.triad1Spec || 'Java 21 • Spring Boot 3',
+            triad1Title: data.triad1Title || '',
+            triad1Spec: data.triad1Spec || '',
             triad1Desc: data.triad1Desc || '',
-            triad2Title: data.triad2Title || 'Data Systems & Modeling',
-            triad2Spec: data.triad2Spec || 'MySQL • PostgreSQL • JPA',
+            triad2Title: data.triad2Title || '',
+            triad2Spec: data.triad2Spec || '',
             triad2Desc: data.triad2Desc || '',
-            triad3Title: data.triad3Title || 'Production Orchestration',
-            triad3Spec: data.triad3Spec || 'Docker • Linux • Compose',
+            triad3Title: data.triad3Title || '',
+            triad3Spec: data.triad3Spec || '',
             triad3Desc: data.triad3Desc || '',
 
             inFocusTitle: data.inFocusTitle || '',
             inFocusDescription: data.inFocusDescription || '',
-            inFocusMetric1Value: data.inFocusMetric1Value || '99.9%',
-            inFocusMetric1Label: data.inFocusMetric1Label || 'SLA Uptime',
-            inFocusMetric2Value: data.inFocusMetric2Value || '<85ms',
-            inFocusMetric2Label: data.inFocusMetric2Label || 'P95 Latency',
-            inFocusMetric3Value: data.inFocusMetric3Value || 'Zero',
-            inFocusMetric3Label: data.inFocusMetric3Label || 'Session State',
+            inFocusMetric1Value: data.inFocusMetric1Value || '',
+            inFocusMetric1Label: data.inFocusMetric1Label || '',
+            inFocusMetric2Value: data.inFocusMetric2Value || '',
+            inFocusMetric2Label: data.inFocusMetric2Label || '',
+            inFocusMetric3Value: data.inFocusMetric3Value || '',
+            inFocusMetric3Label: data.inFocusMetric3Label || '',
             devCornerCapabilities: data.devCornerCapabilities || '',
 
             engineeringPrinciples: data.engineeringPrinciples || '',
@@ -178,14 +178,18 @@ export const AdminProfile = () => {
       const updatedData = { ...formData, avatarUrl: compressedDataUrl };
       setFormData(updatedData);
 
-      // 2. Immediately persist to backend database so the user doesn't need to scroll to bottom!
-      try {
-        await adminService.updateProfile(updatedData);
-        updateTabBranding(updatedData);
-        addToast('Profile picture uploaded and saved successfully!', 'success');
-      } catch (saveErr) {
-        console.warn('Backend direct save fallback:', saveErr);
-        addToast('Photo loaded into preview. Click "Save Photo Now" or Save at bottom to persist.');
+      // 2. Immediately persist to backend database if required fields are present
+      if (formData.fullName?.trim() && formData.title?.trim()) {
+        try {
+          await adminService.updateProfile(updatedData);
+          updateTabBranding(updatedData);
+          addToast('Profile picture uploaded and saved successfully!', 'success');
+        } catch (saveErr) {
+          console.warn('Backend direct save fallback:', saveErr);
+          addToast('Photo loaded into preview. Click "Save Photo Now" to persist.');
+        }
+      } else {
+        addToast('Photo loaded into preview! Enter your Full Name and Title below, then click Save.');
       }
     } catch (err) {
       console.error('Photo processing error:', err);
@@ -209,13 +213,32 @@ export const AdminProfile = () => {
   };
 
   const handleSavePhotoOnly = async () => {
+    if (!formData.fullName?.trim()) {
+      addToast('Please enter your Full Name below before saving.', 'error');
+      const nameInput = document.querySelector('input[name="fullName"]');
+      if (nameInput) nameInput.focus();
+      return;
+    }
+    if (!formData.title?.trim()) {
+      addToast('Please enter your Professional Title below before saving.', 'error');
+      const titleInput = document.querySelector('input[name="title"]');
+      if (titleInput) titleInput.focus();
+      return;
+    }
     setSaving(true);
     try {
       await adminService.updateProfile(formData);
       updateTabBranding(formData);
       addToast('Profile photo saved successfully!', 'success');
     } catch (err) {
-      addToast('Failed to save profile photo: ' + (err?.message || 'Unknown error'), 'error');
+      const validationList = err?.response?.data?.validationErrors 
+        ? Object.values(err.response.data.validationErrors).join(', ')
+        : null;
+      const errMsg = validationList 
+        || err?.response?.data?.message 
+        || err?.message 
+        || 'Unknown error';
+      addToast('Failed to save profile photo: ' + errMsg, 'error');
     } finally {
       setSaving(false);
     }
@@ -275,12 +298,31 @@ export const AdminProfile = () => {
       addToast('No resume link or document to save', 'error');
       return;
     }
+    if (!formData.fullName?.trim()) {
+      addToast('Please enter your Full Name below before saving.', 'error');
+      const nameInput = document.querySelector('input[name="fullName"]');
+      if (nameInput) nameInput.focus();
+      return;
+    }
+    if (!formData.title?.trim()) {
+      addToast('Please enter your Professional Title below before saving.', 'error');
+      const titleInput = document.querySelector('input[name="title"]');
+      if (titleInput) titleInput.focus();
+      return;
+    }
     setUploadingResume(true);
     try {
       await adminService.updateProfile(formData);
       addToast('Resume saved to database successfully!', 'success');
     } catch (err) {
-      addToast('Failed to save resume: ' + (err?.response?.data?.message || err?.message || 'Error'), 'error');
+      const validationList = err?.response?.data?.validationErrors 
+        ? Object.values(err.response.data.validationErrors).join(', ')
+        : null;
+      const errMsg = validationList 
+        || err?.response?.data?.message 
+        || err?.message 
+        || 'Error';
+      addToast('Failed to save resume: ' + errMsg, 'error');
     } finally {
       setUploadingResume(false);
     }
@@ -311,13 +353,32 @@ export const AdminProfile = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!formData.fullName?.trim()) {
+      addToast('Full Name is required', 'error');
+      const nameInput = document.querySelector('input[name="fullName"]');
+      if (nameInput) nameInput.focus();
+      return;
+    }
+    if (!formData.title?.trim()) {
+      addToast('Professional Title / Subtitle is required', 'error');
+      const titleInput = document.querySelector('input[name="title"]');
+      if (titleInput) titleInput.focus();
+      return;
+    }
     setSaving(true);
     try {
       await adminService.updateProfile(formData);
       updateTabBranding(formData);
-      addToast('Profile configuration updated successfully');
+      addToast('Profile configuration updated successfully', 'success');
     } catch (err) {
-      addToast('Failed to save profile changes', 'error');
+      const validationList = err?.response?.data?.validationErrors 
+        ? Object.values(err.response.data.validationErrors).join(', ')
+        : null;
+      const errMsg = validationList 
+        || err?.response?.data?.message 
+        || err?.message 
+        || 'Error';
+      addToast('Failed to save profile changes: ' + errMsg, 'error');
     } finally {
       setSaving(false);
     }

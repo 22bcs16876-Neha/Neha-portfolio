@@ -13,10 +13,7 @@ import java.time.LocalDateTime;
 public class ProfileDto {
     private Long id;
 
-    @NotBlank(message = "Full name is required")
     private String fullName;
-
-    @NotBlank(message = "Title is required")
     private String title;
 
     private String tagline;

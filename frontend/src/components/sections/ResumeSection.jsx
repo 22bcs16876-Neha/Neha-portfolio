@@ -58,7 +58,7 @@ export const ResumeSection = ({ profile }) => {
             </a>
             <a
               href={resumeUrl}
-              download={`${(profile?.fullName || 'Amit_Kumar').replace(/\s+/g, '_')}_Resume.pdf`}
+              download={profile?.fullName ? `${profile.fullName.replace(/\s+/g, '_')}_Resume.pdf` : 'Resume.pdf'}
               className="btn btn-secondary"
             >
               <Download size={16} />

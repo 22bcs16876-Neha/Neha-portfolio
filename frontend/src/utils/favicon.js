@@ -154,4 +154,41 @@ export function updateTabBranding(profile) {
     const monogram = createMonogramFavicon(name);
     setFaviconHref(monogram);
   };
+
+  // 3. Synchronize Open Graph & Twitter Social Sharing Metadata
+  try {
+    const siteUrl = typeof window !== 'undefined' ? window.location.origin : 'https://amitdevloper.netlify.app';
+    const displayTitle = name && role ? `${name} | ${role}` : (name ? `${name} | Portfolio` : 'Portfolio');
+    const displayDesc = (profile.shortAbout || profile.bio || profile.tagline || (name ? `${name}'s Portfolio` : 'Portfolio')).substring(0, 200);
+
+    const setMetaTag = (selector, attrName, value) => {
+      if (!value || typeof document === 'undefined') return;
+      let el = document.querySelector(selector);
+      if (!el) {
+        el = document.createElement('meta');
+        const match = selector.match(/meta\[([a-zA-Z0-9_\-]+)=['"]([^'"]+)['"]\]/);
+        if (match) {
+          el.setAttribute(match[1], match[2]);
+        }
+        document.head.appendChild(el);
+      }
+      el.setAttribute(attrName, value);
+    };
+
+    setMetaTag("meta[property='og:title']", 'content', displayTitle);
+    setMetaTag("meta[name='twitter:title']", 'content', displayTitle);
+    setMetaTag("meta[property='og:description']", 'content', displayDesc);
+    setMetaTag("meta[name='twitter:description']", 'content', displayDesc);
+
+    let socialImg = `${siteUrl}/profile-preview.png`;
+    if (avatarSrc && avatarSrc.startsWith('http')) {
+      socialImg = avatarSrc;
+    } else if (avatarSrc && !avatarSrc.startsWith('data:')) {
+      socialImg = `${siteUrl}${avatarSrc}`;
+    }
+
+    setMetaTag("meta[property='og:image']", 'content', socialImg);
+    setMetaTag("meta[property='og:image:secure_url']", 'content', socialImg);
+    setMetaTag("meta[name='twitter:image']", 'content', socialImg);
+  } catch (e) {}
 }

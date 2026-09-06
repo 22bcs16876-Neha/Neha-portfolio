@@ -15,19 +15,13 @@ RUN mvn clean package -DskipTests -B
 FROM eclipse-temurin:21-jre-alpine
 WORKDIR /app
 
-# Create non-root user and uploads directory with full permissions
-RUN addgroup -S appgroup && adduser -S appuser -G appgroup \
-    && mkdir -p /app/uploads \
-    && chmod -R 777 /app/uploads
-
-# Copy seed upload files from repository into image
-COPY uploads/ /app/uploads/
+# Create non-root user
+RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 
 # Copy jar artifact from builder stage
 COPY --from=builder /app/target/*.jar app.jar
 
-RUN chown -R appuser:appgroup /app \
-    && chmod -R 777 /app/uploads
+RUN chown -R appuser:appgroup /app
 
 USER appuser
 

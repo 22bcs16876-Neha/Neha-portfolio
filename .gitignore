@@ -23,6 +23,8 @@ backend/target/
 *.ear
 *.log
 backend/*.log
+backend/data/
+data/
 
 # IDEs and Editors
 .idea/
